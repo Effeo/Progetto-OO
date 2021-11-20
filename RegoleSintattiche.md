@@ -14,4 +14,4 @@ Function <name> (<parametri>){
 SI USANO I TAB PER L'INDENTAZIONE.
 
 Class diagram:
-Uguale al progetto in Java.
+Uguale al progetto di BD.
