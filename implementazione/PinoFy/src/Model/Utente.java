@@ -1,6 +1,9 @@
 package Model;
-import java.time.*;
+
+import java.sql.Time;
+
 public class Utente {
+	
 	private String nickname;
 	private String mail;
 	private String password;
@@ -8,11 +11,12 @@ public class Utente {
 	private String cognome;
 	private String nazione;
 	private String descrizione;
-	private LocalDate datan;
-	private boolean ispremium;
-	private boolean isadmin;
+	private Time datan;
+	private boolean isPremium;
+	private boolean isAdmin;
+	
 	public Utente(String nickname, String mail, String password, String nome, String cognome, String nazione,
-			String descrizione, LocalDate datan, boolean ispremium, boolean isadmin) {
+			String descrizione, Time datan, boolean isPremium, boolean isAdmin){
 		
 		this.nickname = nickname;
 		this.mail = mail;
@@ -22,72 +26,26 @@ public class Utente {
 		this.nazione = nazione;
 		this.descrizione = descrizione;
 		this.datan = datan;
-		this.ispremium = ispremium;
-		this.isadmin = isadmin;
+		this.isPremium = isPremium;
+		this.isAdmin = isAdmin;
 	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	public String getMail() {
-		return mail;
-	}
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public String getCognome() {
-		return cognome;
-	}
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-	public String getNazione() {
-		return nazione;
-	}
-	public void setNazione(String nazione) {
-		this.nazione = nazione;
-	}
-	public String getDescrizione() {
-		return descrizione;
-	}
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
-	public LocalDate getDatan() {
-		return datan;
-	}
-	public void setDatan(LocalDate datan) {
-		this.datan = datan;
-	}
-	public boolean isIspremium() {
-		return ispremium;
-	}
-	public void setIspremium(boolean ispremium) {
-		this.ispremium = ispremium;
-	}
-	public boolean isIsadmin() {
-		return isadmin;
-	}
-	public void setIsadmin(boolean isadmin) {
-		this.isadmin = isadmin;
-	}
+	public String getNickname() {return nickname;}
 	
+	public String getMail() {return mail;}
 	
+	public String getPassword() {return password;}
 	
+	public String getNome() {return nome;}
 	
+	public String getCognome() {return cognome;}
+	
+	public String getNazione() {return nazione;}
+	
+	public String getDescrizione() {return descrizione;}
+	
+	public Time getDatan() {return datan;}
+	
+	public boolean getIsIspremium() {return isPremium;}
 
+	public boolean getIsIsadmin() {return isAdmin;}
 }
