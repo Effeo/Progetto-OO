@@ -1,5 +1,7 @@
 package DAO;
 
-public interface AlbumDAO {
+import Model.Album;
 
+public interface AlbumDAO {
+	Album takeAlbum(int codA); 
 }

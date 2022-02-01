@@ -1,13 +1,14 @@
 package Model;
 
-import java.time.LocalTime;
+import java.sql.Time;
+
 public class Album {
 	
 	private String titolo;
 	
 	private int annoU;
 	
-	private LocalTime durata;
+	private Time durata;
 	
 	private int ntracce;
 	
@@ -15,7 +16,7 @@ public class Album {
 	
 	private int voto;
 	 
-	public Album(String titolo, int annoU, LocalTime durata, int ntracce, String etichetta, int voto) {
+	public Album(String titolo, int annoU, Time durata, int ntracce, String etichetta, int voto) {
 		this.titolo = titolo;
 		this.annoU = annoU;
 		this.durata = durata;
@@ -23,7 +24,7 @@ public class Album {
 		this.etichetta = etichetta;
 		this.voto = voto;
 	}
-	
+
 	public String getTitolo() {
 		return titolo;
 	}
@@ -32,7 +33,7 @@ public class Album {
 		return annoU;
 	}
 
-	public LocalTime getDurata() {
+	public Time getDurata() {
 		return durata;
 	}
 
@@ -46,9 +47,5 @@ public class Album {
 
 	public int getVoto() {
 		return voto;
-	}
-
-	
-	
-	
+	}	
 }

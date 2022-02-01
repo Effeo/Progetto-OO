@@ -1,10 +1,10 @@
-package Database;
+package ConnessioneDatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Connessione {
+public class Connessione{
 
 	private static Connessione instance;
 	private Connection connection = null;
@@ -13,7 +13,6 @@ public class Connessione {
 	private String url = "jdbc:postgresql://localhost:5432/prova";
 	private String driver = "org.postgresql.Driver";
 
-	// COSTRUTTORE
 	public Connessione() throws SQLException {
 		try {
 			Class.forName(driver);
