@@ -1,7 +1,6 @@
 package Model;
 
 import java.sql.Time;
-import java.util.ArrayList;
 
 public class Traccia {
 	
@@ -19,9 +18,8 @@ public class Traccia {
 	private Album album;
 	private Traccia tr;
 	private Traccia tc;
-	private ArrayList<Artista> prodotta_da;
 	
-	public Traccia(String titolo, Time durata, String etichetta, int annoU, String genere, String link, String formato, int qualita, int voto,boolean isCover,boolean isRemastered,Album album,Traccia tr,Traccia tc,ArrayList<Artista> prodotta_da) {
+	public Traccia(String titolo, Time durata, String etichetta, int annoU, String genere, String link, String formato, int qualita, int voto,boolean isCover,boolean isRemastered,Album album,Traccia tr,Traccia tc) {
 		this.titolo=titolo;
 		this.durata=durata;
 		this.etichetta=etichetta;
@@ -36,7 +34,6 @@ public class Traccia {
 		this.album=album;
 		this.tr=tr;
 		this.tc=tc;
-		this.prodotta_da=prodotta_da;
 	}
 	
 	public String getTitolo() {return titolo;}
@@ -66,8 +63,4 @@ public class Traccia {
 	public Traccia getTr() {return tr;}
 
 	public Traccia getTc() {return tc;}
-
-	public ArrayList<Artista> getProdotta_da() {return prodotta_da;}
-	
-	
 }
