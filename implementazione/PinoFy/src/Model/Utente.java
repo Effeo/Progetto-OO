@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Time;
+import java.sql.Date;
 
 public class Utente {
 	
@@ -11,12 +11,12 @@ public class Utente {
 	private String cognome;
 	private String nazione;
 	private String descrizione;
-	private Time datan;
+	private Date datan;
 	private boolean isPremium;
 	private boolean isAdmin;
 	
 	public Utente(String nickname, String mail, String password, String nome, String cognome, String nazione,
-			String descrizione, Time datan, boolean isPremium, boolean isAdmin){
+			String descrizione, Date datan, boolean isPremium, boolean isAdmin){
 		
 		this.nickname = nickname;
 		this.mail = mail;
@@ -43,7 +43,7 @@ public class Utente {
 	
 	public String getDescrizione() {return descrizione;}
 	
-	public Time getDatan() {return datan;}
+	public Date getDatan() {return datan;}
 	
 	public boolean getIsIspremium() {return isPremium;}
 
