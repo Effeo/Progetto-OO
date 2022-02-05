@@ -12,7 +12,7 @@ public class Controller {
 	{
 		UtenteImplementazioneDao ui = new UtenteImplementazioneDao();
 		u = ui.Login(email, password);
-		System.out.println(u.getCognome());
+		
 		return u;
 	}
 
