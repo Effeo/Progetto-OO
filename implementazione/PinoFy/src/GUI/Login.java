@@ -100,7 +100,7 @@ public class Login extends JFrame {
 		loginBTN.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				utente = controller.Login(emailField.getText(), passwordField.getText());
+				utente = controller.login(emailField.getText(), passwordField.getText());
 				
 				if(utente == null) 
 				{
@@ -119,6 +119,21 @@ public class Login extends JFrame {
 		contentPane.add(loginBTN);
 		
 		JButton registratiBTN = new JButton("Sign up");
+		registratiBTN.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int esito = controller.signUp("cc", "cc@ss.kk", "kk", "lmk", "jnk", "njn", "sdd", 22-12-3, true, true);
+				
+				if(esito == 0)
+				{
+					System.out.println("Insert non andata a buon fine");
+				}
+				else if(esito > 0)
+				{
+					System.out.println("Insert andata a buon fine");
+				}
+			}
+		});
 		registratiBTN.setBackground(new Color(220, 20, 60));
 		registratiBTN.setFont(new Font("Arial", Font.BOLD, 26));
 		registratiBTN.setBounds(426, 414, 314, 37);

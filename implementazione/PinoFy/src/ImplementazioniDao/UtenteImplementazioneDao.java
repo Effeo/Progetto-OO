@@ -24,7 +24,7 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 	}
 	
 	@Override
-	public Utente Login(String email, String password) {
+	public Utente login(String email, String password) {
 		Utente utente = null;
 		
 		String nickname, nome, cognome, nazione, descrizione, passwordU;
@@ -73,4 +73,20 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 		return utente;
 	}
 	
+	@Override
+	public int sign_Up(String nickname, String mail, String password, String nome, String cognome, String nazione,
+			String descrizione, Date datan, boolean isPremium, boolean isAdmin) {
+		
+		int esito = 0;
+		
+		try {PreparedStatement querySignUp = connection.prepareStatement("Insert INTO UTENTE Values('"+ nickname +"','"+ mail + "','" + password + "','"+ nome + "','"+ cognome + "','" + nazione +"','" + descrizione +"','" + datan + "','" + isPremium + "," + isAdmin +");");
+				esito = querySignUp.executeUpdate();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		
+		return esito;
+	}
 }
