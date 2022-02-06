@@ -14,6 +14,7 @@ public class Home extends JFrame {
 
 	private JPanel contentPane;
 	private JFrame login;
+	private JFrame home;
 	private Utente u;
 	private Controller controller;
 	/**
@@ -23,13 +24,22 @@ public class Home extends JFrame {
 		this.login = login;
 		this.u = u;
 		this.controller = controller;
+		System.out.println("ti trovi nella home");
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1066, 668);
+		initialize();
+		login.setVisible(false);
+		home.setVisible(true);
+		
+	}
+	
+	private void initialize()
+	{
+		home = new JFrame();
+		home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		home.setBounds(100, 100, 1066, 668);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		home.setContentPane(contentPane);
+		contentPane.setLayout(null);
 	}
-
 }

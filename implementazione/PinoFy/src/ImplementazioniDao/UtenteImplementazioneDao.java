@@ -73,15 +73,4 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 		return utente;
 	}
 	
-	
-	public void Sign_Up(String nickname,String mail,String password,String nome,String cognome,String nazione,String descrizione,Date datan,boolean isPremium,boolean isAdmin) {
-		try {PreparedStatement querySignUp = connection.prepareStatement("Insert INTO UTENTE Values("+ nickname +","+ mail + "," + password + ","+ nome + ","+ cognome + "," + nazione +"," + descrizione +"," + datan + "," + isPremium + "," + isAdmin +");");
-				querySignUp.executeQuery();
-			}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
 }
