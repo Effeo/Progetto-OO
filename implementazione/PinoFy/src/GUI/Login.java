@@ -74,7 +74,7 @@ public class Login extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Arial", Font.PLAIN, 22));
 		passwordField.setHorizontalAlignment(SwingConstants.LEFT);
-		passwordField.setBounds(426, 274, 311, 45);
+		passwordField.setBounds(426, 258, 311, 45);
 		contentPane.add(passwordField);
 		
 		emailField = new JTextField();
@@ -115,28 +115,20 @@ public class Login extends JFrame {
 			}
 		});
 		loginBTN.setFont(new Font("Arial", Font.BOLD, 26));
-		loginBTN.setBounds(426, 366, 314, 37);
+		loginBTN.setBounds(426, 338, 314, 37);
 		contentPane.add(loginBTN);
 		
 		JButton registratiBTN = new JButton("Sign up");
 		registratiBTN.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int esito = controller.signUp("cc", "cc@ss.kk", "kk", "lmk", "jnk", "njn", "sdd", 22-12-3, true, true);
+				SignUp signUp = new SignUp(controller, login);
 				
-				if(esito == 0)
-				{
-					System.out.println("Insert non andata a buon fine");
-				}
-				else if(esito > 0)
-				{
-					System.out.println("Insert andata a buon fine");
-				}
 			}
 		});
 		registratiBTN.setBackground(new Color(220, 20, 60));
 		registratiBTN.setFont(new Font("Arial", Font.BOLD, 26));
-		registratiBTN.setBounds(426, 414, 314, 37);
+		registratiBTN.setBounds(426, 396, 314, 37);
 		contentPane.add(registratiBTN);
 		
 		JPanel panel = new JPanel();
@@ -151,5 +143,6 @@ public class Login extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/images/pino.jpg")));
 		lblNewLabel.setBounds(0, 0, 195, 279);
 		panel.add(lblNewLabel);
+		
 	}
 }

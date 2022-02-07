@@ -11,12 +11,13 @@ public class Utente {
 	private String cognome;
 	private String nazione;
 	private String descrizione;
+	private String sesso;
 	private Date datan;
 	private boolean isPremium;
 	private boolean isAdmin;
 	
 	public Utente(String nickname, String mail, String password, String nome, String cognome, String nazione,
-			String descrizione, Date datan, boolean isPremium, boolean isAdmin){
+			String descrizione, String sesso, Date datan, boolean isPremium, boolean isAdmin){
 		
 		this.nickname = nickname;
 		this.mail = mail;
@@ -25,6 +26,7 @@ public class Utente {
 		this.cognome = cognome;
 		this.nazione = nazione;
 		this.descrizione = descrizione;
+		this.sesso = sesso;
 		this.datan = datan;
 		this.isPremium = isPremium;
 		this.isAdmin = isAdmin;

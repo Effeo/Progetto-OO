@@ -21,11 +21,11 @@ public class Controller {
 	}
 	
 	public int signUp(String nickname, String mail, String password, String nome, String cognome, String nazione,
-			String descrizione, Date datan, boolean isPremium, boolean isAdmin)
+			String descrizione, String sesso, String datan, String isPremium, String isAdmin)
 	{
 		int esito;
 		
-		esito = ui.sign_Up(nickname, mail, password, nome, cognome, nazione, descrizione, datan, isPremium, isAdmin);
+		esito = ui.sign_Up(nickname, mail, password, nome, cognome, nazione, descrizione, sesso, datan, isPremium, isAdmin);
 		
 		return esito;
 	}

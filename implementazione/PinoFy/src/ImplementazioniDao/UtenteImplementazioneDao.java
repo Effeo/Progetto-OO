@@ -27,7 +27,7 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 	public Utente login(String email, String password) {
 		Utente utente = null;
 		
-		String nickname, nome, cognome, nazione, descrizione, passwordU;
+		String nickname, nome, cognome, nazione, descrizione, passwordU, sesso;
 		Date datan;
 		boolean isPremium, isAdmin;
 		
@@ -53,10 +53,11 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 				isPremium = rs.getBoolean("IsPremium");
 				isAdmin = rs.getBoolean("IsAdmin");
 				passwordU = rs.getString("Password");
+				sesso = rs.getString("Sesso");
 	
 				if(passwordU.equals(password))
 				{
-					utente = new Utente(nickname, email, password, nome, cognome, nazione, descrizione, datan, isPremium, isAdmin);
+					utente = new Utente(nickname, email, password, nome, cognome, nazione, descrizione, sesso, datan, isPremium, isAdmin);
 				}
 				else
 				{
@@ -75,11 +76,11 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 	
 	@Override
 	public int sign_Up(String nickname, String mail, String password, String nome, String cognome, String nazione,
-			String descrizione, Date datan, boolean isPremium, boolean isAdmin) {
+			String descrizione, String sesso, String datan, String isPremium, String isAdmin) {
 		
 		int esito = 0;
 		
-		try {PreparedStatement querySignUp = connection.prepareStatement("Insert INTO UTENTE Values('"+ nickname +"','"+ mail + "','" + password + "','"+ nome + "','"+ cognome + "','" + nazione +"','" + descrizione +"','" + datan + "','" + isPremium + "," + isAdmin +");");
+		try {PreparedStatement querySignUp = connection.prepareStatement("Insert INTO UTENTE Values('"+ nickname +"','"+ nome + "','" + cognome + "','"+ mail + "','"+ password + "','" + datan +"','" + sesso +"','" + nazione + "','" + descrizione + "',"+ isPremium + "," + isAdmin +");");
 				esito = querySignUp.executeUpdate();
 			}
 			catch(SQLException e)
