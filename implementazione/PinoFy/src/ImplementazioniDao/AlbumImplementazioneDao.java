@@ -46,7 +46,7 @@ public class AlbumImplementazioneDao implements AlbumDAO {
 				voto = rs.getInt("Voto");
 				durata = rs.getTime("Durata");
 				
-				album = new Album(titolo, annou, durata, ntracce, etichetta, voto);
+				album = new Album(titolo, annou, durata, ntracce, etichetta, voto);// ce ne solo 1 ok, ma per logica ndrebbe fatto fuoir il while,secoondome
 			}
 		}
 		catch(SQLException e)

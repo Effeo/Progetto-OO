@@ -50,4 +50,8 @@ public class Utente {
 	public boolean getIsIspremium() {return isPremium;}
 
 	public boolean getIsIsadmin() {return isAdmin;}
+	
+	public String getSesso() {return sesso;}
+	
+	
 }

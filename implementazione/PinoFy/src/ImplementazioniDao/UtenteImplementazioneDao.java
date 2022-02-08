@@ -90,4 +90,28 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 		
 		return esito;
 	}
+	
+	public int check_Exist_Mail_NickName(String mail,String nickname) {
+		int esisto=0;
+		boolean nik=false;
+		boolean mal=false;
+		try {PreparedStatement queryCheckMail= connection.prepareStatement("SELECT * FROM UTENTE WHERE Email= '"+ mail+ "'");
+			ResultSet rs=queryCheckMail.executeQuery();
+			PreparedStatement queryCheckNick= connection.prepareStatement("SELECT * FROM UTENTE WHERE NickName= '"+ nickname+ "'");
+			ResultSet rs1=queryCheckNick.executeQuery();
+			if(rs != null) {mal=true;}
+			if(rs1!=null) {nik=true;}
+			if(nik & mal) {esisto=3;} // tutti e due esistono gia
+			else if(!nik & !mal){esisto=0;} // tutto a Procida
+			else{
+				if(nik) {esisto=1;} // nikname gia esiste ,ma mail ok
+				else {esisto=2;} // mail gia esiste,nikname ok
+			}
+			}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return esisto;
+		
+	}
 }
