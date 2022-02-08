@@ -95,7 +95,7 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 		int esisto=0;
 		boolean nik=false;
 		boolean mal=false;
-		try {PreparedStatement queryCheckMail= connection.prepareStatement("SELECT * FROM UTENTE WHERE Email= '"+ mail+ "'");
+		try {PreparedStatement queryCheckMail= connection.prepareStatement("SELECT * FROM UTENTE WHERE Email= '"+ mail+ "';");
 			ResultSet rs=queryCheckMail.executeQuery();
 			PreparedStatement queryCheckNick= connection.prepareStatement("SELECT * FROM UTENTE WHERE NickName= '"+ nickname+ "'");
 			ResultSet rs1=queryCheckNick.executeQuery();
