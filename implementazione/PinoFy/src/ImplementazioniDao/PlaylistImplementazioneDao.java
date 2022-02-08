@@ -46,7 +46,7 @@ public class PlaylistImplementazioneDao implements PlaylistDAO {
 		boolean isPremium;
 		boolean isAdmin;
 		
-		try {PreparedStatement queryTakePlaylist=connection.prepareStatement("SELECT * FROM PLAYLIST WHERE CodP= " + codP + ";");
+		try {PreparedStatement queryTakePlaylist=connection.prepareStatement("SELECT * FROM PLAYLIST WHERE CodP= "+codP);
 		ResultSet rs=queryTakePlaylist.executeQuery();
 		while(rs.next()) {
 			titolo=rs.getString("Titolo");
@@ -57,7 +57,7 @@ public class PlaylistImplementazioneDao implements PlaylistDAO {
 		}//ora se visibilita e' true dobbiamo dargli la Playlist , ma nel model io passo un riferimento ad utente,ora ho una stringa...
 		
 		if(visibilita) {
-			PreparedStatement queryTakeUtente=connection.prepareStatement("SELECT * FROM UTENTE WHERE NickName='"+utente+"';");
+			PreparedStatement queryTakeUtente=connection.prepareStatement("SELECT * FROM UTENTE WHERE NickName='"+utente+"'");
 			ResultSet rs1=queryTakeUtente.executeQuery();
 			while(rs1.next()) {
 				nickname=rs1.getString("NickName");
