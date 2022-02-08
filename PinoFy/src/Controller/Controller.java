@@ -1,0 +1,32 @@
+package Controller;
+
+import java.sql.Date;
+
+import ImplementazioniDao.*;
+import Model.*;
+
+public class Controller {
+	private Utente u;
+	private UtenteImplementazioneDao ui;
+	
+	public Controller() {
+		ui = new UtenteImplementazioneDao();
+	}
+	
+	public Utente login(String email, String password)
+	{
+		u = ui.login(email, password);
+		
+		return u;
+	}
+	
+	public int signUp(String nickname, String mail, String password, String nome, String cognome, String nazione,
+			String descrizione, String sesso, String datan, String isPremium, String isAdmin)
+	{
+		int esito;
+		
+		esito = ui.sign_Up(nickname, mail, password, nome, cognome, nazione, descrizione, sesso, datan, isPremium, isAdmin);
+		
+		return esito;
+	}
+}
