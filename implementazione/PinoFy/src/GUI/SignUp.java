@@ -284,6 +284,7 @@ public class SignUp extends JFrame {
 				JDayChooser gg;
 				JYearChooser aa;
 				String data = "";
+				boolean existsNickName, existsEmail;
 				int esito;
 				
 				if(premiumRdb.isSelected()) {
@@ -322,17 +323,35 @@ public class SignUp extends JFrame {
 				
 				if(passwordField.getText().equals(passwordConfField.getText()))
 				{
-					esito = controller.signUp(nickNameField.getText(), emailField.getText(), passwordField.getText(), nomeField.getText(), cognomeField.getText(), nazField.getText(), DescrizioneField.getText(), sesso, data, premium, "False");
-					if(esito > 0)
+					existsNickName = controller.checkNickName(nickNameField.getText());
+					existsEmail = controller.checkEmail(emailField.getText());
+					
+					if(!existsNickName && !existsEmail)
 					{
-						JOptionPane.showMessageDialog(confermaBTN, "Creazione avvenuta con successo!");
-						login.setVisible(true);
-						System.out.println("Ti trovi in login in");
-						signUp.dispose();
+						esito = controller.signUp(nickNameField.getText(), emailField.getText(), passwordField.getText(), nomeField.getText(), cognomeField.getText(), nazField.getText(), DescrizioneField.getText(), sesso, data, premium, "False");
+						if(esito > 0)
+						{
+							JOptionPane.showMessageDialog(confermaBTN, "Creazione avvenuta con successo!");
+							login.setVisible(true);
+							System.out.println("Ti trovi in login in");
+							signUp.dispose();
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(confermaBTN, "Errore: controlla di aver compilato tutti i campi obbligatori e aver rispettato i vincoli");
+						}
+					}
+					else if(existsNickName && !existsEmail)
+					{
+						JOptionPane.showMessageDialog(confermaBTN, "Errore: NickName già in uso");
+					}
+					else if(!existsNickName && existsEmail)
+					{
+						JOptionPane.showMessageDialog(confermaBTN, "Errore: Email già in uso");
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(confermaBTN, "Errore: controlla di aver compilato tutti i campi obbligatori e aver rispettato i vincoli");
+						JOptionPane.showMessageDialog(confermaBTN, "Errore: Email e NickName già in uso");
 					}
 				}
 				else

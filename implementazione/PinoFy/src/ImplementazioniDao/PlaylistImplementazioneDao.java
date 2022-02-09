@@ -27,24 +27,24 @@ public class PlaylistImplementazioneDao implements PlaylistDAO {
 	
 	public Playlist takePlaylist(int codP) {
 		Playlist p=null;
-		String titolo;
-		int numTracce;
-		boolean visibilita;
-		Time durata;
+		String titolo = "";
+		int numTracce = 0;
+		boolean visibilita = false;
+		Time durata = null;
 		Utente u;
-		String utente;
+		String utente = "";
 		// devo creare pure le variabili per Utente
-		String nickname;
-		String mail;
-		String password;
-		String nome;
-		String cognome;
-		String nazione;
-		String descrizione;
-		String sesso;
-		Date datan;
-		boolean isPremium;
-		boolean isAdmin;
+		String nickname = "";
+		String mail = "";
+		String password = "";
+		String nome = "";
+		String cognome = "";
+		String nazione = "";
+		String descrizione = "";
+		String sesso = "";
+		Date datan = null;
+		boolean isPremium = false;
+		boolean isAdmin = false;
 		
 		try {PreparedStatement queryTakePlaylist=connection.prepareStatement("SELECT * FROM PLAYLIST WHERE CodP= "+codP);
 		ResultSet rs=queryTakePlaylist.executeQuery();

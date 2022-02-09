@@ -29,4 +29,18 @@ public class Controller {
 		
 		return esito;
 	}
+	
+	public boolean checkEmail(String email)
+	{
+		boolean esito = ui.checkEmail(email);
+		
+		return esito;
+	}
+	
+	public boolean checkNickName(String nickName)
+	{
+		boolean esito = ui.checkNickName(nickName);
+		
+		return esito;
+	}
 }
