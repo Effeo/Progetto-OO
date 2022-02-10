@@ -1,7 +1,9 @@
 package DAO;
 
+import java.util.ArrayList;
+
 import Model.Traccia;
 
 public interface TracciaDAO {
-	Traccia takeTraccia(int codT);
+	ArrayList<Traccia> takeTraccia(String query);
 }

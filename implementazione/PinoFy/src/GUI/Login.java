@@ -46,7 +46,6 @@ public class Login extends JFrame {
 		this.controller = controller;
 		initialize();
 		login.setVisible(true);
-		
 	}
 	
 	private void initialize() {
@@ -78,6 +77,7 @@ public class Login extends JFrame {
 		contentPane.add(passwordField);
 		
 		emailField = new JTextField();
+		emailField.setText("francesco.orlando3@studenti.unina.it");
 		emailField.setFont(new Font("Arial", Font.PLAIN, 22));
 		emailField.setBounds(426, 160, 311, 45);
 		contentPane.add(emailField);
@@ -109,6 +109,8 @@ public class Login extends JFrame {
 				else 
 				{
 					Home home = new Home(login, utente, controller);
+					passwordField.setText("");
+					emailField.setText("");
 					System.out.println(utente.getCognome());
 				}
 				
@@ -123,7 +125,8 @@ public class Login extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				SignUp signUp = new SignUp(controller, login);
-				
+				passwordField.setText("");
+				emailField.setText("");
 			}
 		});
 		registratiBTN.setBackground(new Color(220, 20, 60));

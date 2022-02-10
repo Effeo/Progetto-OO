@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import ConnessioneDatabase.Connessione;
 import DAO.AlbumDAO;
@@ -24,8 +25,9 @@ public class AlbumImplementazioneDao implements AlbumDAO {
 	}
 	
 	@Override
-	public Album takeAlbum(int codA) {
-		Album album = null;
+	public ArrayList<Album> takeAlbum(String query) {
+		ArrayList<Album> album= new ArrayList<Album>();
+		Album a = null;
 		
 		String titolo, etichetta;
 		int annou, ntracce, voto;
@@ -33,7 +35,7 @@ public class AlbumImplementazioneDao implements AlbumDAO {
 		
 		try {
 			PreparedStatement queryTakeAlbum = connection.prepareStatement
-			(" SELECT * FROM ALBUM WHERE CODA = " + codA);
+			(query);
 			
 			ResultSet rs = queryTakeAlbum.executeQuery();
 			
@@ -46,7 +48,8 @@ public class AlbumImplementazioneDao implements AlbumDAO {
 				voto = rs.getInt("Voto");
 				durata = rs.getTime("Durata");
 				
-				album = new Album(titolo, annou, durata, ntracce, etichetta, voto);// ce ne solo 1 ok, ma per logica ndrebbe fatto fuoir il while,secoondome
+				a = new Album(titolo, annou, durata, ntracce, etichetta, voto);
+				album.add(a);
 			}
 		}
 		catch(SQLException e)

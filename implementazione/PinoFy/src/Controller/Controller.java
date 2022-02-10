@@ -1,6 +1,7 @@
 package Controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import ImplementazioniDao.*;
 import Model.*;
@@ -8,9 +9,11 @@ import Model.*;
 public class Controller {
 	private Utente u;
 	private UtenteImplementazioneDao ui;
+	private TracciaImplementazioneDao ti;
 	
 	public Controller() {
 		ui = new UtenteImplementazioneDao();
+		ti = new TracciaImplementazioneDao();
 	}
 	
 	public Utente login(String email, String password)
@@ -42,5 +45,14 @@ public class Controller {
 		boolean esito = ui.checkNickName(nickName);
 		
 		return esito;
+	}
+	
+	public ArrayList<Traccia> takeTraccia(String query)
+	{
+		ArrayList<Traccia> tracce = null;
+		
+		tracce = ti.takeTraccia(query);
+		
+		return tracce;
 	}
 }

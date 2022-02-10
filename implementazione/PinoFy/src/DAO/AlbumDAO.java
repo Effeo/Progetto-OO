@@ -1,7 +1,9 @@
 package DAO;
 
+import java.util.ArrayList;
+
 import Model.Album;
 
 public interface AlbumDAO {
-	Album takeAlbum(int codA); 
+	ArrayList<Album> takeAlbum(String query);
 }
