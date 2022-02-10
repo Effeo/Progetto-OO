@@ -47,9 +47,9 @@ public class Utente {
 	
 	public Date getDatan() {return datan;}
 	
-	public boolean getIsIspremium() {return isPremium;}
+	public boolean getIspremium() {return isPremium;}
 
-	public boolean getIsIsadmin() {return isAdmin;}
+	public boolean getIsadmin() {return isAdmin;}
 	
 	public String getSesso() {return sesso;}
 	
