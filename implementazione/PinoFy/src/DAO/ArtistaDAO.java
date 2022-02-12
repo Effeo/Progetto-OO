@@ -1,5 +1,9 @@
 package DAO;
 
-public interface ArtistaDAO {
+import java.util.ArrayList;
 
+import Model.Artista;
+
+public interface ArtistaDAO {
+	ArrayList<Artista> takeArtista(String query);
 }

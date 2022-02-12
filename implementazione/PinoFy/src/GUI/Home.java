@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -25,6 +26,8 @@ import Model.*;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 
 public class Home extends JFrame {
 
@@ -32,7 +35,9 @@ public class Home extends JFrame {
 	private JTextField ricercaField;
 	private ArrayList<Traccia> tracce;
 	private JFrame home;
-	
+	private JButton btnAscolta = new JButton("Ascolta");
+	private JButton btnVota = new JButton("Vota");
+	private JButton btnDettagli = new JButton("Dettagli");
 	
 	public Home(JFrame login, Utente utente, Controller controller) 
 	{
@@ -136,49 +141,120 @@ public class Home extends JFrame {
 		btnIlMioProfilo.setBounds(727, 76, 314, 37);
 		contentPane.add(btnIlMioProfilo);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(494, 296, 547, 229);
-		scrollPane.setBackground(new Color(224, 255, 255));
-		contentPane.add(scrollPane);
 		
-		JList list = new JList();
-		list.setFont(new Font("Arial", Font.PLAIN, 26));
-		scrollPane.setViewportView(list);
-		list.setBackground(new Color(224, 255, 255));
-		list.setBorder(BorderFactory.createEtchedBorder());
-		
-		JButton btnDettagli = new JButton("Dettagli");
-		btnDettagli.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println(list.getSelectedIndex());
-			}
-		});
-		btnDettagli.setForeground(Color.BLACK);
-		btnDettagli.setFont(new Font("Arial", Font.BOLD, 26));
-		btnDettagli.setBackground(new Color(244, 164, 96));
-		btnDettagli.setBounds(494, 558, 154, 37);
-		contentPane.add(btnDettagli);
-		btnDettagli.setVisible(false);
-		
-		JButton btnAscolta = new JButton("Ascolta");
 		btnAscolta.setForeground(Color.BLACK);
 		btnAscolta.setFont(new Font("Arial", Font.BOLD, 26));
 		btnAscolta.setBackground(new Color(244, 164, 96));
-		btnAscolta.setBounds(692, 558, 154, 37);
+		btnAscolta.setBounds(685, 488, 154, 37);
 		contentPane.add(btnAscolta);
 		btnAscolta.setVisible(false);
 		
-		JButton btnVota = new JButton("Vota");
 		btnVota.setForeground(Color.BLACK);
 		btnVota.setFont(new Font("Arial", Font.BOLD, 26));
 		btnVota.setBackground(new Color(244, 164, 96));
-		btnVota.setBounds(887, 558, 154, 37);
+		btnVota.setBounds(869, 488, 154, 37);
 		contentPane.add(btnVota);
 		btnVota.setVisible(false);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(494, 225, 529, 238);
+		contentPane.add(scrollPane);
+		
+		JList list = new JList();
+		list.setFont(new Font("Arial", Font.PLAIN, 22));
+		scrollPane.setViewportView(list);
 		list.setVisible(false);
 		scrollPane.setVisible(false);
+		
+		
+		
+		JLabel lblInserisciVoto = new JLabel("Inserisci voto:");
+		lblInserisciVoto.setFont(new Font("Arial", Font.PLAIN, 26));
+		lblInserisciVoto.setBounds(494, 543, 227, 37);
+		contentPane.add(lblInserisciVoto);
+		lblInserisciVoto.setVisible(false);
+		
+		JRadioButton rb1 = new JRadioButton("1");
+		rb1.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb1.setBackground(new Color(224, 255, 255));
+		rb1.setBounds(494, 587, 44, 34);
+		contentPane.add(rb1);
+		rb1.setVisible(false);
+		
+		JRadioButton rb2 = new JRadioButton("2");
+		rb2.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb2.setBackground(new Color(224, 255, 255));
+		rb2.setBounds(540, 587, 44, 34);
+		contentPane.add(rb2);
+		rb2.setVisible(false);
+		
+		JRadioButton rb3 = new JRadioButton("3");
+		rb3.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb3.setBackground(new Color(224, 255, 255));
+		rb3.setBounds(586, 587, 44, 34);
+		contentPane.add(rb3);
+		rb3.setVisible(false);
+		
+		JRadioButton rb4 = new JRadioButton("4");
+		rb4.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb4.setBackground(new Color(224, 255, 255));
+		rb4.setBounds(632, 587, 44, 34);
+		contentPane.add(rb4);
+		rb4.setVisible(false);
+		
+		JRadioButton rb5 = new JRadioButton("5");
+		rb5.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb5.setBackground(new Color(224, 255, 255));
+		rb5.setBounds(685, 587, 44, 34);
+		contentPane.add(rb5);
+		rb5.setVisible(false);
+		
+		JRadioButton rb6 = new JRadioButton("6");
+		rb6.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb6.setBackground(new Color(224, 255, 255));
+		rb6.setBounds(727, 587, 44, 34);
+		contentPane.add(rb6);
+		rb6.setVisible(false);
+		
+		JRadioButton rb7 = new JRadioButton("7");
+		rb7.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb7.setBackground(new Color(224, 255, 255));
+		rb7.setBounds(773, 587, 44, 34);
+		contentPane.add(rb7);
+		rb7.setVisible(false);
+		
+		JRadioButton rb8 = new JRadioButton("8");
+		rb8.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb8.setBackground(new Color(224, 255, 255));
+		rb8.setBounds(819, 587, 44, 34);
+		contentPane.add(rb8);
+		rb8.setVisible(false);
+		
+		JRadioButton rb9 = new JRadioButton("9");
+		rb9.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb9.setBackground(new Color(224, 255, 255));
+		rb9.setBounds(869, 587, 44, 34);
+		contentPane.add(rb9);
+		rb9.setVisible(false);
+		
+		JRadioButton rb10 = new JRadioButton("10");
+		rb10.setFont(new Font("Arial", Font.PLAIN, 26));
+		rb10.setBackground(new Color(224, 255, 255));
+		rb10.setBounds(915, 587, 53, 34);
+		contentPane.add(rb10);
+		rb10.setVisible(false);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rb1);
+		group.add(rb2);
+		group.add(rb3);
+		group.add(rb4);
+		group.add(rb5);
+		group.add(rb6);
+		group.add(rb7);
+		group.add(rb8);
+		group.add(rb9);
+		group.add(rb10);
 		
 		JButton btnCercaTracce = new JButton("Cerca Tracce");
 		btnCercaTracce.addMouseListener(new MouseAdapter() {
@@ -187,11 +263,23 @@ public class Home extends JFrame {
 				if(utente.getIsIspremium() || utente.getIsIsadmin())
 				{
 					tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ ricercaField.getText() + "'");
-					
+					btnVota.setVisible(true);
+					lblInserisciVoto.setVisible(true);
+					rb1.setVisible(true);
+					rb2.setVisible(true);
+					rb3.setVisible(true);
+					rb4.setVisible(true);
+					rb5.setVisible(true);
+					rb6.setVisible(true);
+					rb7.setVisible(true);
+					rb8.setVisible(true);
+					rb9.setVisible(true);
+					rb10.setVisible(true);
 				}
 				else
 				{
 					tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ ricercaField.getText() + "' AND qualita = 128;");
+					
 				}
 				System.out.println(tracce.size());
 				if(tracce.size() != 0)
@@ -200,10 +288,7 @@ public class Home extends JFrame {
 					btnAscolta.setVisible(true);
 					scrollPane.setVisible(true);
 					list.setVisible(true);
-					if(utente.getIsIspremium() || utente.getIsIspremium())
-					{
-						btnVota.setVisible(true);
-					}
+					
 					int i;
 					DefaultListModel mdl = new DefaultListModel();
 					for(i = 0; i < tracce.size(); i++)
@@ -225,6 +310,40 @@ public class Home extends JFrame {
 		btnCercaTracce.setBounds(10, 296, 314, 37);
 		contentPane.add(btnCercaTracce);
 		
+		btnDettagli.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(list.getSelectedIndex() != -1)
+				{
+					DettagliTraccia dettagliTraccia = new DettagliTraccia(home, tracce.get(list.getSelectedIndex()), controller, null);
+					ricercaField.setText("");
+					list.setVisible(false);
+					scrollPane.setVisible(false);
+					btnDettagli.setVisible(false);
+					btnAscolta.setVisible(false);
+					btnVota.setVisible(false);
+					lblInserisciVoto.setVisible(false);
+					rb1.setVisible(false);
+					rb2.setVisible(false);
+					rb3.setVisible(false);
+					rb4.setVisible(false);
+					rb5.setVisible(false);
+					rb6.setVisible(false);
+					rb7.setVisible(false);
+					rb8.setVisible(false);
+					rb9.setVisible(false);
+					rb10.setVisible(false);
+					
+				}
+			}
+		});
+		
+		btnDettagli.setForeground(Color.BLACK);
+		btnDettagli.setFont(new Font("Arial", Font.BOLD, 26));
+		btnDettagli.setBackground(new Color(244, 164, 96));
+		btnDettagli.setBounds(494, 488, 154, 37);
+		contentPane.add(btnDettagli);
+		btnDettagli.setVisible(false);
 		
 	}
 }

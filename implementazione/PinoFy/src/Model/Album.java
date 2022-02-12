@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 public class Album {
 	
@@ -15,14 +16,17 @@ public class Album {
 	private String etichetta;
 	
 	private int voto;
-	 
-	public Album(String titolo, int annoU, Time durata, int ntracce, String etichetta, int voto) {
+	
+	private ArrayList <Artista> artisti;
+	
+	public Album(String titolo, int annoU, Time durata, int ntracce, String etichetta, int voto, ArrayList <Artista> artisti) {
 		this.titolo = titolo;
 		this.annoU = annoU;
 		this.durata = durata;
 		this.ntracce = ntracce;
 		this.etichetta = etichetta;
 		this.voto = voto;
+		this.artisti = artisti;
 	}
 
 	public String getTitolo() {
@@ -48,4 +52,6 @@ public class Album {
 	public int getVoto() {
 		return voto;
 	}	
+	
+	public ArrayList<Artista> getArtisti(){return artisti;}
 }

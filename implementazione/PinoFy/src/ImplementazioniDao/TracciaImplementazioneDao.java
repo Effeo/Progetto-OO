@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import ConnessioneDatabase.Connessione;
 import DAO.TracciaDAO;
 import Model.Album;
+import Model.Artista;
 import Model.Traccia;
 
 public class TracciaImplementazioneDao implements TracciaDAO {
@@ -31,9 +32,9 @@ private Connection connection;
 		ArrayList<Traccia> traccia = new ArrayList<Traccia>();
 		Traccia t = null;
 		
-		String titolo, etichetta, genere, link, formato;
+		String titolo, etichetta, genere, link, formato, queryArtisti;
 		Time durata;
-		int annoU, qualita, voto, codA, codTC, codTR;
+		int annoU, qualita, voto, codA, codTC, codTR, codT;
 		boolean isCover, isRemastered;
 		
 		AlbumImplementazioneDao albumDao = null;
@@ -47,6 +48,8 @@ private Connection connection;
 		ArrayList<Album> album = new ArrayList<Album>();
 		ArrayList<Traccia> trr= new ArrayList<Traccia>();
 		ArrayList<Traccia> tcc= new ArrayList<Traccia>();
+		ArrayList<Artista> artisti = new ArrayList<Artista>();
+		ArtistaImplementazioneDao ai = new ArtistaImplementazioneDao();
 		
 		try {
 			PreparedStatement queryTakeTraccia = connection.prepareStatement
@@ -70,13 +73,17 @@ private Connection connection;
 				codA = rs.getInt("CodA");
 				codTC = rs.getInt("CodTC");
 				codTR= rs.getInt("CodTR");
-				
+				codT = rs.getInt("CodT");
 				albumDao = new AlbumImplementazioneDao();
 				tr = new TracciaImplementazioneDao();
 				tc = new TracciaImplementazioneDao();
 				
-				album = albumDao.takeAlbum("SELECT * FROM ALBUM WHERE CodA="+codA);
-				a = album.get(0);
+				if(codA != 0)
+				{
+					album = albumDao.takeAlbum("SELECT * FROM ALBUM WHERE CodA="+codA);
+					a = album.get(0);
+				}
+				
 				
 				if(codTR != 0)
 				{ 
@@ -89,7 +96,9 @@ private Connection connection;
 					tracciaC=tcc.get(0);
 				}
 				
-				t = new Traccia(titolo, durata, etichetta, annoU, genere, link, formato, qualita, voto, isCover, isRemastered, a, tracciaR, tracciaC);
+				queryArtisti = "SELECT * FROM ARTISTA, PRODUCE WHERE ARTISTA.NOMEARTE = PRODUCE.NOMEARTE AND PRODUCE.CODT = " + codT;
+				artisti = ai.takeArtista(queryArtisti);
+				t = new Traccia(titolo, durata, etichetta, annoU, genere, link, formato, qualita, voto, isCover, isRemastered, a, tracciaR, tracciaC, artisti);
 				traccia.add(t);
 			}
 		}

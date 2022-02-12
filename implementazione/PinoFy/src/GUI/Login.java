@@ -129,7 +129,7 @@ public class Login extends JFrame {
 				emailField.setText("");
 			}
 		});
-		registratiBTN.setBackground(new Color(220, 20, 60));
+		registratiBTN.setBackground(Color.RED);
 		registratiBTN.setFont(new Font("Arial", Font.BOLD, 26));
 		registratiBTN.setBounds(426, 396, 314, 37);
 		contentPane.add(registratiBTN);

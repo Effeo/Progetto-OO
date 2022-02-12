@@ -16,6 +16,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
@@ -26,6 +28,8 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
 import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 public class SignUp extends JFrame {
 
@@ -165,7 +169,7 @@ public class SignUp extends JFrame {
 		JRadioButton premiumRdb = new JRadioButton("Utente premium");
 		premiumRdb.setBackground(new Color(224, 255, 255));
 		premiumRdb.setFont(new Font("Arial", Font.PLAIN, 26));
-		premiumRdb.setBounds(634, 637, 217, 34);
+		premiumRdb.setBounds(634, 603, 217, 34);
 		contentPane.add(premiumRdb);
 		
 		JLabel lblNewLabel_2_4 = new JLabel("*");
@@ -214,7 +218,7 @@ public class SignUp extends JFrame {
 		JLabel lblNewLabel_2_2_1 = new JLabel("*");
 		lblNewLabel_2_2_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_2_2_1.setFont(new Font("Arial", Font.BOLD, 36));
-		lblNewLabel_2_2_1.setBounds(391, 634, 50, 46);
+		lblNewLabel_2_2_1.setBounds(391, 637, 50, 46);
 		contentPane.add(lblNewLabel_2_2_1);
 		
 		JLabel lblSesso = new JLabel("Sesso:");
@@ -228,52 +232,37 @@ public class SignUp extends JFrame {
 		lblNewLabel_2_2_1_1.setBounds(720, 426, 50, 46);
 		contentPane.add(lblNewLabel_2_2_1_1);
 		
-		JRadioButton uomoRb = new JRadioButton("Uomo");
-		uomoRb.setFont(new Font("Arial", Font.PLAIN, 26));
-		uomoRb.setBackground(new Color(224, 255, 255));
-		uomoRb.setBounds(634, 468, 217, 34);
-		contentPane.add(uomoRb);
-		
-		JRadioButton rdbtnDonna = new JRadioButton("Donna");
-		rdbtnDonna.setFont(new Font("Arial", Font.PLAIN, 26));
-		rdbtnDonna.setBackground(new Color(224, 255, 255));
-		rdbtnDonna.setBounds(853, 468, 217, 34);
-		contentPane.add(rdbtnDonna);
-		
-		JRadioButton rdbtnTransgender = new JRadioButton("Transgender");
-		rdbtnTransgender.setFont(new Font("Arial", Font.PLAIN, 26));
-		rdbtnTransgender.setBackground(new Color(224, 255, 255));
-		rdbtnTransgender.setBounds(634, 505, 217, 34);
-		contentPane.add(rdbtnTransgender);
-		
-		JRadioButton rdbtnLampadina = new JRadioButton("Lampadina");
-		rdbtnLampadina.setFont(new Font("Arial", Font.PLAIN, 26));
-		rdbtnLampadina.setBackground(new Color(224, 255, 255));
-		rdbtnLampadina.setBounds(853, 505, 217, 34);
-		contentPane.add(rdbtnLampadina);
-		
-		JRadioButton rdbtnUnicorno = new JRadioButton("Unicorno");
-		rdbtnUnicorno.setFont(new Font("Arial", Font.PLAIN, 26));
-		rdbtnUnicorno.setBackground(new Color(224, 255, 255));
-		rdbtnUnicorno.setBounds(634, 542, 217, 34);
-		contentPane.add(rdbtnUnicorno);
-		
 		JLabel lblTipoDiUtente = new JLabel("Tipo di Utente:");
 		lblTipoDiUtente.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblTipoDiUtente.setBounds(634, 594, 178, 34);
+		lblTipoDiUtente.setBounds(634, 562, 178, 34);
 		contentPane.add(lblTipoDiUtente);
 		
 		JRadioButton rdbtnUtenteBase = new JRadioButton("Utente base");
 		rdbtnUtenteBase.setFont(new Font("Arial", Font.PLAIN, 26));
 		rdbtnUtenteBase.setBackground(new Color(224, 255, 255));
-		rdbtnUtenteBase.setBounds(853, 637, 217, 34);
+		rdbtnUtenteBase.setBounds(853, 603, 217, 34);
 		contentPane.add(rdbtnUtenteBase);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(634, 471, 311, 80);
+		contentPane.add(scrollPane);
+		
+		JList list = new JList();
+		list.setFont(new Font("Arial", Font.PLAIN, 26));
+		scrollPane.setViewportView(list);
+		DefaultListModel mdl = new DefaultListModel();
+		mdl.addElement("Uomo");
+		mdl.addElement("Donna");
+		mdl.addElement("Transgender");
+		mdl.addElement("Lampadina");
+		mdl.addElement("Unicorno");
+		list.setModel(mdl);
 		
 		JButton confermaBTN = new JButton("Conferma");
 		confermaBTN.setForeground(Color.BLACK);
 		confermaBTN.setFont(new Font("Arial", Font.BOLD, 26));
 		confermaBTN.setBackground(new Color(0, 128, 0));
-		confermaBTN.setBounds(634, 689, 330, 45);
+		confermaBTN.setBounds(634, 641, 330, 45);
 		contentPane.add(confermaBTN);
 		confermaBTN.addMouseListener(new MouseAdapter() {
 			@Override
@@ -291,30 +280,7 @@ public class SignUp extends JFrame {
 					premium = "True";
 				}
 				
-				if(uomoRb.isSelected())
-				{
-					sesso = "Uomo";
-				}
-				
-				if(rdbtnDonna.isSelected())
-				{
-					sesso = "Donna";
-				}
-				
-				if(rdbtnTransgender.isSelected())
-				{
-					sesso = "Transgender";
-				}
-				
-				if(rdbtnLampadina.isSelected())
-				{
-					sesso = "Lampadina";
-				}
-				
-				if(rdbtnUnicorno.isSelected())
-				{
-					sesso = "Unicorno";
-				}
+				sesso = (String) list.getSelectedValue();
 				
 				mm = calendar.getMonthChooser();
 				gg = calendar.getDayChooser();
@@ -360,5 +326,26 @@ public class SignUp extends JFrame {
 				}
 			}
 		});
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(premiumRdb);
+		group.add(rdbtnUtenteBase);
+		
+		JButton btnTornaIndietro = new JButton("Torna indietro");
+		btnTornaIndietro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				login.setVisible(true);
+				System.out.println("Ti trovi in login in");
+				signUp.dispose();
+			}
+		});
+		btnTornaIndietro.setForeground(Color.BLACK);
+		btnTornaIndietro.setFont(new Font("Arial", Font.BOLD, 26));
+		btnTornaIndietro.setBackground(Color.RED);
+		btnTornaIndietro.setBounds(634, 707, 330, 45);
+		contentPane.add(btnTornaIndietro);
+		
+		
 	}
 }

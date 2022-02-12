@@ -140,21 +140,4 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 	}
 	
 	
-	//Questo e' il metodo nella GUI che dicevo 
-	
-	
-	public int AggiornaUtente( String nikname,String nome,String cognome,String nazione,
-			String descrizione, String sesso,boolean isPremium, boolean isAdmin) {
-		int esito=0;
-		
-		try {
-			PreparedStatement queryupdate=connection.prepareStatement("UPDATE UTENTE SET Nome= '"+nome+"' ,Cognome=' "+cognome+"',Nazione= '"+nazione+"', Sesso= '"+sesso+"' ,Descrizione= '"+descrizione+"' ,IsPremium="+isPremium+",IsAdmin="+isAdmin+"WHERE NikName= '" + nikname +"'");
-			esito=queryupdate.executeUpdate();		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return esito;
-	}
-	
 }
