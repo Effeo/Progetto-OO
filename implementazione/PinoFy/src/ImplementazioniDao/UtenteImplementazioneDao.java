@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import ConnessioneDatabase.Connessione;
 import DAO.UtenteDAO;
@@ -139,5 +140,73 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 		return flag;
 	}
 	
+	public int updateUtente(String nickName,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin)
+	{
+		int esito=0;
+		
+		try
+		{
+			PreparedStatement queryupdateUtente= connection.prepareStatement("UPDATE UTENTE SET Nome = '" + nome + "', Cognome = '" + cognome + "', Nazionalita = '" + nazione + "', Sesso = '" + sesso + "', IsPremium = " + IsPremium + ", IsAdmin = " + IsAdmin + " WHERE Nickname = '" + nickName + "';");
+			esito=queryupdateUtente.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return esito;
+	}
+
+	public ArrayList<Utente> takeUtente(String query)
+	{
+		ArrayList<Utente> utenti=new ArrayList<Utente>();
+		Utente u=null;
+		String nickname, nome, cognome, nazione, descrizione, passwordU, sesso,mail;
+		Date datan;
+		boolean isPremium, isAdmin;
+		
+		try
+		{
+			PreparedStatement querytakeUtente= connection.prepareStatement(query);
+			ResultSet rs=querytakeUtente.executeQuery();
+			while(rs.next()) {
+				nickname=rs.getString("NikName");
+				nome=rs.getString("Nome");
+				cognome=rs.getString("Cognome");
+				nazione=rs.getString("Nazione");
+				passwordU=rs.getString("Password");
+				sesso=rs.getString("Sesso");
+				datan=rs.getDate("Data");
+				isPremium=rs.getBoolean("IsPremium");
+				isAdmin=rs.getBoolean("IsAdmin");
+				mail=rs.getString("Email");
+				descrizione=rs.getString("Descrizione");
+				u=new Utente(nickname,mail,passwordU,nome,cognome,nazione,descrizione,sesso,datan,isPremium,isAdmin);
+				utenti.add(u);	
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return utenti;
+	}
+	
+	@Override
+	public int deleteUtente(String query)
+	{
+		int esito = 0;
+		
+		try
+		{
+			PreparedStatement queryDeleteUtente = connection.prepareStatement(query);
+			esito = queryDeleteUtente.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return esito;
+	}
 	
 }

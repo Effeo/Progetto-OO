@@ -20,24 +20,26 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JCalendar;
+import javax.swing.JTextArea;
+import javax.swing.JEditorPane;
 
 public class MyUtente extends JFrame {
 
 	private JPanel contentPane;
 	
 	private JFrame myUtente;
-	private JTextField NikName;
 	private JTextField Nome;
-	private JTextField Descrizione;
-	private JTextField Email;
 	private JTextField Cognome;
-	private JTextField Password;
 	private JTextField Nazione;
 	private DefaultListModel dlm = new DefaultListModel();
-
-	public MyUtente(JFrame home, Utente utente, Controller controller, boolean flag) {
+	private JButton btnNO = new JButton("NO");
+	private JButton btnSI = new JButton("SI");
+	private JLabel lblSeiSicuro = new JLabel("Sei sicuro ?");
+	
+	public MyUtente(JFrame home, Utente utente, Controller controller, boolean flag, JFrame login) {
 		System.out.println("Sei in MyUtente");
 		
 		home.setVisible(false);
@@ -52,11 +54,6 @@ public class MyUtente extends JFrame {
 		contentPane.setBackground(new Color(224, 255, 255));
 		setContentPane(contentPane);
 		
-		JLabel lblNickName = new JLabel("Nickname:");
-		lblNickName.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblNickName.setBounds(10, 89, 144, 37);
-		contentPane.add(lblNickName);
-		
 		JLabel lblMyUtente = new JLabel("Profilo di " + utente.getNickname());
 		lblMyUtente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMyUtente.setForeground(new Color(34, 139, 34));
@@ -64,35 +61,22 @@ public class MyUtente extends JFrame {
 		lblMyUtente.setBounds(10, 10, 647, 54);
 		contentPane.add(lblMyUtente);
 		
-		NikName = new JTextField();
-		NikName.setEditable(false);
-		NikName.setFont(new Font("Arial", Font.PLAIN, 22));
-		NikName.setColumns(10);
-		NikName.setBounds(10, 122, 227, 45);
-		contentPane.add(NikName);
-		NikName.setText(utente.getNickname());
-		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblNome.setBounds(10, 179, 99, 37);
+		lblNome.setBounds(10, 89, 99, 37);
 		contentPane.add(lblNome);
 		
 		Nome = new JTextField();
 		Nome.setEditable(false);
 		Nome.setFont(new Font("Arial", Font.PLAIN, 22));
 		Nome.setColumns(10);
-		Nome.setBounds(10, 214, 227, 45);
+		Nome.setBounds(10, 122, 227, 45);
 		contentPane.add(Nome);
 		Nome.setText(utente.getNome());
 		
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblEmail.setBounds(10, 365, 129, 37);
-		contentPane.add(lblEmail);
-		
 		JLabel lblCognome = new JLabel("Cognome:");
 		lblCognome.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblCognome.setBounds(10, 270, 144, 37);
+		lblCognome.setBounds(10, 178, 144, 37);
 		contentPane.add(lblCognome);
 		
 		JLabel lblDataN = new JLabel("Data di nascita:");
@@ -105,14 +89,9 @@ public class MyUtente extends JFrame {
 		lblSesso.setBounds(312, 179, 99, 37);
 		contentPane.add(lblSesso);
 		
-		JLabel lblDescrizione = new JLabel("Descrizione:");
-		lblDescrizione.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblDescrizione.setBounds(312, 519, 227, 37);
-		contentPane.add(lblDescrizione);
-		
 		JLabel lblIsAdmin = new JLabel("Admin:");
 		lblIsAdmin.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblIsAdmin.setBounds(10, 595, 81, 37);
+		lblIsAdmin.setBounds(10, 571, 81, 31);
 		contentPane.add(lblIsAdmin);
 		
 		JLabel lblNazione = new JLabel("Nazione:");
@@ -122,53 +101,34 @@ public class MyUtente extends JFrame {
 		
 		JLabel lblIsPremium = new JLabel("Premium:");
 		lblIsPremium.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblIsPremium.setBounds(10, 554, 116, 37);
+		lblIsPremium.setBounds(10, 523, 116, 37);
 		contentPane.add(lblIsPremium);
 		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Arial", Font.PLAIN, 26));
-		lblPassword.setBounds(10, 451, 159, 37);
-		contentPane.add(lblPassword);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 311, 227, 189);
+		contentPane.add(scrollPane_1);
 		
-		Descrizione = new JTextField();
-		Descrizione.setEditable(false);
-		Descrizione.setFont(new Font("Arial", Font.PLAIN, 22));
-		Descrizione.setColumns(10);
-		Descrizione.setBounds(312, 567, 362, 45);
-		contentPane.add(Descrizione);
+		JEditorPane descrizione = new JEditorPane();
+		descrizione.setFont(new Font("Arial", Font.PLAIN, 22));
+		scrollPane_1.setViewportView(descrizione);
+		descrizione.setEditable(false);
+		
 		if(utente.getDescrizione() != null)
 		{
-			Descrizione.setText(utente.getDescrizione());
+			descrizione.setText(utente.getDescrizione());
 		}
 		else
 		{
-			Descrizione.setText("Nessuna descrizione");
+			descrizione.setText("Nessuna descrizione");
 		}
-		
-		
-		Email = new JTextField();
-		Email.setEditable(false);
-		Email.setFont(new Font("Arial", Font.PLAIN, 22));
-		Email.setColumns(10);
-		Email.setBounds(10, 398, 227, 45);
-		contentPane.add(Email);
-		Email.setText(utente.getMail());
 		
 		Cognome = new JTextField();
 		Cognome.setEditable(false);
 		Cognome.setFont(new Font("Arial", Font.PLAIN, 22));
 		Cognome.setColumns(10);
-		Cognome.setBounds(10, 309, 227, 45);
+		Cognome.setBounds(10, 220, 227, 45);
 		contentPane.add(Cognome);
 		Cognome.setText(utente.getCognome());
-		
-		Password = new JTextField();
-		Password.setEditable(false);
-		Password.setFont(new Font("Arial", Font.PLAIN, 22));
-		Password.setColumns(10);
-		Password.setBounds(10, 492, 227, 45);
-		contentPane.add(Password);
-		Password.setText(utente.getPassword());
 		
 		Nazione = new JTextField();
 		Nazione.setEditable(false);
@@ -194,16 +154,42 @@ public class MyUtente extends JFrame {
 		contentPane.add(calendar);
 		calendar.setDate(utente.getDatan());
 		
+		JCheckBox chckbxPremium = new JCheckBox("");
+		chckbxPremium.setEnabled(false);
+		chckbxPremium.setBounds(132, 533, 21, 21);
+		contentPane.add(chckbxPremium);
+		chckbxPremium.setSelected(utente.getIsIspremium());
+		
+		JCheckBox chckbxAdmin = new JCheckBox("");
+		chckbxAdmin.setEnabled(false);
+		chckbxAdmin.setBounds(133, 578, 21, 21);
+		contentPane.add(chckbxAdmin);
+		chckbxAdmin.setSelected(utente.getIsIsadmin());
+		
 		JButton btnConferma = new JButton("Conferma"); 
 		btnConferma.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int esito=0;
+				
 				Nome.setEditable(false);
 				Cognome.setEditable(false);
-				Descrizione.setEditable(false);
+				descrizione.setEditable(false);
 				Nazione.setEditable(false);
 				list.setEnabled(false);
 				btnConferma.setVisible(false);
+				esito=controller.updateUtente(utente.getNickname(),Nome.getSelectedText(),Cognome.getSelectedText(),Nazione.getSelectedText(),(String) list.getSelectedValue(),chckbxPremium.isSelected(),chckbxAdmin.isSelected());
+				if(esito == 1 )
+				{
+					JOptionPane.showMessageDialog(btnConferma, "Modifica avvenuta con successo, verrai riportato al log-in per ricaricare il profilo");
+					home.dispose();
+					login.setVisible(true);
+					myUtente.dispose();
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(btnConferma, "Errore durante la modifica");
+				}
 			}
 		});
 		btnConferma.setForeground(Color.BLACK);
@@ -221,7 +207,7 @@ public class MyUtente extends JFrame {
 				list.setEnabled(true);
 				Nome.setEditable(true);
 				Cognome.setEditable(true);
-				Descrizione.setEditable(true);
+				descrizione.setEditable(true);
 				Nazione.setEditable(true);
 				dlm.remove(0);
 				dlm.addElement("Uomo");
@@ -254,25 +240,28 @@ public class MyUtente extends JFrame {
 		contentPane.add(btnTornaIndietro);
 		
 		JButton btnCancellaAccount = new JButton("Elimina Account");
+		btnCancellaAccount.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSI.setVisible(true);
+				btnNO.setVisible(true);
+				lblSeiSicuro.setVisible(true);
+			}
+		});
 		btnCancellaAccount.setForeground(Color.BLACK);
 		btnCancellaAccount.setFont(new Font("Arial", Font.BOLD, 26));
 		btnCancellaAccount.setBackground(new Color(255, 69, 0));
 		btnCancellaAccount.setBounds(794, 75, 247, 37);
 		contentPane.add(btnCancellaAccount);
 		
-		JCheckBox chckbxPremium = new JCheckBox("");
-		chckbxPremium.setEnabled(false);
-		chckbxPremium.setBounds(125, 565, 21, 21);
-		contentPane.add(chckbxPremium);
-		chckbxPremium.setSelected(utente.getIsIspremium());
-		
-		JCheckBox chckbxAdmin = new JCheckBox("");
-		chckbxAdmin.setEnabled(false);
-		chckbxAdmin.setBounds(125, 605, 21, 21);
-		contentPane.add(chckbxAdmin);
-		chckbxAdmin.setSelected(utente.getIsIsadmin());
-		
 		JButton btnPannelloAscolti = new JButton("Pannello ascolti");
+		btnPannelloAscolti.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Pannello pannello=new Pannello(myUtente,controller);
+				System.out.println("Sono in Pannello");
+			}
+		});
 		btnPannelloAscolti.setForeground(Color.BLACK);
 		btnPannelloAscolti.setFont(new Font("Arial", Font.BOLD, 26));
 		btnPannelloAscolti.setBackground(new Color(255, 165, 0));
@@ -281,8 +270,63 @@ public class MyUtente extends JFrame {
 		
 		btnModifica.setVisible(flag);
 		btnCancellaAccount.setVisible(flag);
-		btnPannelloAscolti.setVisible(utente.getIsIsadmin());
+		if(utente.getIsIsadmin() && flag)
+		{
+			btnPannelloAscolti.setVisible(true);
+		}
 		list.setEnabled(false);
 		calendar.setEnabled(false);
+		
+		JLabel lblDescrizione = new JLabel("Descrizione:");
+		lblDescrizione.setFont(new Font("Arial", Font.PLAIN, 26));
+		lblDescrizione.setBounds(10, 276, 144, 37);
+		contentPane.add(lblDescrizione);
+		
+		lblSeiSicuro.setFont(new Font("Arial", Font.PLAIN, 26));
+		lblSeiSicuro.setBounds(794, 238, 144, 37);
+		contentPane.add(lblSeiSicuro);
+		btnNO.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblSeiSicuro.setVisible(false);
+				btnNO.setVisible(false);
+				btnSI.setVisible(false);
+			}
+		});
+		
+		btnNO.setForeground(Color.BLACK);
+		btnNO.setFont(new Font("Arial", Font.BOLD, 26));
+		btnNO.setBackground(Color.RED);
+		btnNO.setBounds(898, 286, 81, 37);
+		contentPane.add(btnNO);
+		btnSI.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int esito = controller.deleteUtente(utente.getNickname());
+				
+				if(esito != 0)
+				{
+					JOptionPane.showMessageDialog(btnCancellaAccount, "Eliminazione eseguita con successo");
+					home.dispose();
+					login.setVisible(true);
+					System.out.println("Ti trovi in login");
+					myUtente.dispose();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(btnCancellaAccount, "Impossibile eliminare l'account");
+				}
+			}
+		});
+		
+		btnSI.setForeground(Color.BLACK);
+		btnSI.setFont(new Font("Arial", Font.BOLD, 26));
+		btnSI.setBackground(new Color(0, 128, 0));
+		btnSI.setBounds(794, 286, 81, 37);
+		contentPane.add(btnSI);
+		
+		btnSI.setVisible(false);
+		btnNO.setVisible(false);
+		lblSeiSicuro.setVisible(false);
 	}
 }

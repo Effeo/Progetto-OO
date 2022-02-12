@@ -4,6 +4,7 @@ import java.security.Timestamp;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ImplementazioniDao.*;
 import Model.*;
@@ -14,12 +15,14 @@ public class Controller {
 	private TracciaImplementazioneDao ti;
 	private AlbumImplementazioneDao ai;
 	private AscoltoImplementazioneDao asi;
+	private VotoImplementazioneDao vi;
 	
 	public Controller() {
 		ui = new UtenteImplementazioneDao();
 		ti = new TracciaImplementazioneDao();
 		ai = new AlbumImplementazioneDao();
 		asi = new AscoltoImplementazioneDao();
+		vi = new VotoImplementazioneDao();
 	}
 	
 	public Utente login(String email, String password)
@@ -69,13 +72,34 @@ public class Controller {
 		return album;
 	}
 	
-	public int insertAscolto(Traccia traccia, Utente utente, Timestamp tempo)
+	public int insertAscolto(Traccia traccia, Utente utente, Calendar tempo)
 	{
 		int esito = 0;
-		int ora = (int) Math.ceil(tempo.getTimestamp().getHours() / 6);
+		int ora = (int) Math.ceil(tempo.getTime().getHours() / 6);
 		
-		String query = "Insert into ascolta values(" + utente.getNickname() + ", " + traccia.getCodT() + ", "+ ora + ")";
+		String query = "Insert into ascolta values('" + utente.getNickname() + "', " + traccia.getCodT() + ", "+ ora + ")";
 		esito = asi.insertAscolto(query);
+		
+		return esito;
+	}
+	
+	public int updateUtente(String nickname,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin) {
+		int esito=0;
+		
+		esito=ui.updateUtente(nickname, nome, cognome, nazione, sesso, IsPremium, IsAdmin);
+		
+		return esito;
+	}
+	
+	public int insertVoto(Utente utente, Traccia traccia, int voto)
+	{
+		int esito = vi.insertVoto("insert into vota values('" + utente.getNickname() + "', " + traccia.getCodT() + ", " + voto + ")");
+		return esito;
+	}
+	
+	public int deleteUtente(String nickName)
+	{
+		int esito = ui.deleteUtente("delete from utente where nickname = '"+ nickName +"'");
 		
 		return esito;
 	}

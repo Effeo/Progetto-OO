@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Model.*;
 import javax.swing.JList;
@@ -56,6 +57,8 @@ public class Home extends JFrame {
 	private JRadioButton rb9 = new JRadioButton("9");
 	private JRadioButton rb10 = new JRadioButton("10");
 	private JLabel lblInserisciVoto = new JLabel("Inserisci voto:");
+	private ButtonGroup group = new ButtonGroup();
+	private JButton btnCercaTracce = new JButton("Cerca Tracce");
 	
 	public Home(JFrame login, Utente utente, Controller controller) 
 	{
@@ -185,7 +188,7 @@ public class Home extends JFrame {
 		btnIlMioProfilo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MyUtente myUtente = new MyUtente(home, utente, controller, true);
+				MyUtente myUtente = new MyUtente(home, utente, controller, true, login);
 				setVisibilita(false);
 			}
 		});
@@ -205,8 +208,9 @@ public class Home extends JFrame {
 				    } catch (java.io.IOException e1) {
 				        System.out.println(e1.getMessage());
 				    }
-					//Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-					//int esito = controller.insertAscolto(tracce.get(list.getSelectedIndex()), utente, timestamp);
+					
+					int esito = controller.insertAscolto(tracce.get(list.getSelectedIndex()), utente, Calendar.getInstance());
+					System.out.println(esito);
 				}
 				else
 				{
@@ -220,6 +224,78 @@ public class Home extends JFrame {
 		btnAscolta.setBackground(new Color(244, 164, 96));
 		btnAscolta.setBounds(685, 488, 154, 37);
 		contentPane.add(btnAscolta);
+		btnVota.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(list.getSelectedIndex() != -1)
+				{
+					int voto = -1;
+					int esito;
+					
+					if(rb1.isSelected())
+					{
+						voto = 1;
+					}
+					else if(rb2.isSelected())
+					{
+						voto = 2;
+					}
+					else if(rb3.isSelected())
+					{
+						voto = 3;
+					}
+					else if(rb4.isSelected())
+					{
+						voto = 4;
+					}
+					else if(rb5.isSelected())
+					{
+						voto = 5;
+					}
+					else if(rb6.isSelected())
+					{
+						voto = 6;
+					}
+					else if(rb7.isSelected())
+					{
+						voto = 7;
+					}
+					else if(rb8.isSelected())
+					{
+						voto = 8;
+					}
+					else if(rb9.isSelected())
+					{
+						voto = 9;
+					}
+					else if(rb10.isSelected())
+					{
+						voto = 10;
+					}
+					
+					if(voto != -1)
+					{
+						esito = controller.insertVoto(utente, tracce.get(list.getSelectedIndex()), 0);
+						
+						System.out.println(esito);
+						
+						if(esito != 0)
+						{
+							cercaTraccia(controller, utente, tracce.get(0).getTitolo());
+						}
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(btnAscolta, "Scegliere un voto");
+					}
+					
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(btnAscolta, "Eseguire su una scelta");
+				}
+			}
+		});
 		
 		btnVota.setForeground(Color.BLACK);
 		btnVota.setFont(new Font("Arial", Font.BOLD, 26));
@@ -283,7 +359,6 @@ public class Home extends JFrame {
 		rb10.setBounds(915, 587, 53, 34);
 		contentPane.add(rb10);
 		
-		ButtonGroup group = new ButtonGroup();
 		group.add(rb1);
 		group.add(rb2);
 		group.add(rb3);
@@ -295,47 +370,10 @@ public class Home extends JFrame {
 		group.add(rb9);
 		group.add(rb10);
 		
-		JButton btnCercaTracce = new JButton("Cerca Tracce");
 		btnCercaTracce.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(utente.getIsIspremium() || utente.getIsIsadmin())
-				{
-					tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ ricercaField.getText() + "'");
-				}
-				else
-				{
-					tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ ricercaField.getText() + "' AND qualita = 128;");
-					
-				}
-				System.out.println(tracce.size());
-				if(tracce.size() != 0)
-				{
-					if(utente.getIsIspremium() || utente.getIsIsadmin())
-					{
-						setVisibilita(true);
-					}
-					
-					btnDettagli.setVisible(true);
-					btnAscolta.setVisible(true);
-					scrollPane.setVisible(true);
-					list.setVisible(true);
-					btnAlbum = false;
-					btnTraccia = true;
-					
-					int i;
-					mdl.removeAllElements();
-					for(i = 0; i < tracce.size(); i++)
-					{
-						mdl.addElement(""+ tracce.get(i).getTitolo() + ", " + tracce.get(i).getFormato() + ", " + tracce.get(i).getQualita());
-					}
-					
-					list.setModel(mdl);
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(btnCercaTracce, "Non esistono tracce con il titolo inserito");
-				}
+				cercaTraccia(controller, utente, ricercaField.getText());
 			}
 		});
 		btnCercaTracce.setForeground(Color.BLACK);
@@ -357,8 +395,9 @@ public class Home extends JFrame {
 					}
 					else if(btnAlbum)
 					{
-						System.out.println(album.get(list.getSelectedIndex()).getTracce().get(0).getTitolo());
-						System.out.println(album.get(list.getSelectedIndex()).getArtisti().get(0).getNomearte());
+						DettagliAlbum dettagliAlbum = new DettagliAlbum(home, controller, album.get(list.getSelectedIndex()), null);
+						ricercaField.setText("");
+						setVisibilita(false);
 					}
 				}
 				else
@@ -395,5 +434,46 @@ public class Home extends JFrame {
 		rb8.setVisible(flag);
 		rb9.setVisible(flag);
 		rb10.setVisible(flag);
+	}
+	
+	private void cercaTraccia(Controller controller, Utente utente, String titolo)
+	{
+		if(utente.getIsIspremium() || utente.getIsIsadmin())
+		{
+			tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ titolo + "'");
+		}
+		else
+		{
+			tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ titolo + "' AND qualita = 128;");
+			
+		}
+		System.out.println(tracce.size());
+		if(tracce.size() != 0)
+		{
+			if(utente.getIsIspremium() || utente.getIsIsadmin())
+			{
+				setVisibilita(true);
+			}
+			
+			btnDettagli.setVisible(true);
+			btnAscolta.setVisible(true);
+			scrollPane.setVisible(true);
+			list.setVisible(true);
+			btnAlbum = false;
+			btnTraccia = true;
+			
+			int i;
+			mdl.removeAllElements();
+			for(i = 0; i < tracce.size(); i++)
+			{
+				mdl.addElement(""+ tracce.get(i).getTitolo() + ", " + tracce.get(i).getFormato() + ", " + tracce.get(i).getQualita());
+			}
+			
+			list.setModel(mdl);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(btnCercaTracce, "Non esistono tracce con il titolo inserito");
+		}
 	}
 }
