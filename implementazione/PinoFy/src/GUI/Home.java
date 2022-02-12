@@ -132,7 +132,7 @@ public class Home extends JFrame {
 		btnIlMioProfilo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MyUtente myUtente = new MyUtente(home, utente, controller, true);
+				
 			}
 		});
 		btnIlMioProfilo.setForeground(Color.BLACK);
