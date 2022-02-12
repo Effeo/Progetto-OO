@@ -1,5 +1,8 @@
 package DAO;
 
-public interface AscoltoDAO {
+import Model.*;
 
+public interface AscoltoDAO 
+{
+	int insertAscolto(String query);
 }

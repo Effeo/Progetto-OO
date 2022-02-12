@@ -11,6 +11,7 @@ import ConnessioneDatabase.Connessione;
 import DAO.AlbumDAO;
 import Model.Album;
 import Model.Artista;
+import Model.Traccia;
 
 public class AlbumImplementazioneDao implements AlbumDAO {
 	private Connection connection;
@@ -26,11 +27,13 @@ public class AlbumImplementazioneDao implements AlbumDAO {
 	}
 	
 	@Override
-	public ArrayList<Album> takeAlbum(String query) {
+	public ArrayList<Album> takeAlbum(String query, boolean flag) {
 		ArrayList<Album> album= new ArrayList<Album>();
 		ArrayList<Artista> artisti = new ArrayList<Artista>();
 		ArtistaImplementazioneDao ai = new ArtistaImplementazioneDao();
+		TracciaImplementazioneDao ti = new TracciaImplementazioneDao();
 		Album a = null;
+		ArrayList <Traccia> tracce = new ArrayList<Traccia>();
 		
 		String titolo, etichetta, queryArtisti;
 		int annou, ntracce, voto, codA;
@@ -54,7 +57,16 @@ public class AlbumImplementazioneDao implements AlbumDAO {
 				
 				queryArtisti = "SELECT * FROM ARTISTA, INCIDE WHERE INCIDE.NOMEARTE = ARTISTA.NOMEARTE AND INCIDE.CODA = " + codA;
 				artisti = ai.takeArtista(queryArtisti);
-				a = new Album(titolo, annou, durata, ntracce, etichetta, voto, artisti);
+				if(flag)
+				{
+					tracce = ti.takeTraccia("Select * from traccia where coda = " + codA);
+				}
+				else
+				{
+					tracce = null;
+				}
+				
+				a = new Album(titolo, annou, durata, ntracce, etichetta, voto, artisti, tracce);
 				album.add(a);
 			}
 		}

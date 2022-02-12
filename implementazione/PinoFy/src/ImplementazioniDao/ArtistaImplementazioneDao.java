@@ -44,7 +44,7 @@ public class ArtistaImplementazioneDao implements ArtistaDAO{
 				descrizione = rs.getString(2);
 				voto = rs.getInt(3);
 				
-				artista = new Artista(nomeArte, descrizione, voto);
+				artista = new Artista(nomeArte, descrizione, voto, null, null);
 				artisti.add(artista);
 			}
 		}

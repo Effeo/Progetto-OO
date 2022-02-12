@@ -204,7 +204,6 @@ public class MyUtente extends JFrame {
 				Nazione.setEditable(false);
 				list.setEnabled(false);
 				btnConferma.setVisible(false);
-				calendar.setEnabled(false);
 			}
 		});
 		btnConferma.setForeground(Color.BLACK);
@@ -230,7 +229,6 @@ public class MyUtente extends JFrame {
 				dlm.addElement("Transgender");
 				dlm.addElement("Lampadina");
 				dlm.addElement("Unicorno");
-				calendar.setEnabled(true);
 				list.setModel(dlm);
 			}
 		});

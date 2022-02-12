@@ -80,7 +80,7 @@ private Connection connection;
 				
 				if(codA != 0)
 				{
-					album = albumDao.takeAlbum("SELECT * FROM ALBUM WHERE CodA="+codA);
+					album = albumDao.takeAlbum("SELECT * FROM ALBUM WHERE CodA="+codA, false);
 					a = album.get(0);
 				}
 				
@@ -98,7 +98,7 @@ private Connection connection;
 				
 				queryArtisti = "SELECT * FROM ARTISTA, PRODUCE WHERE ARTISTA.NOMEARTE = PRODUCE.NOMEARTE AND PRODUCE.CODT = " + codT;
 				artisti = ai.takeArtista(queryArtisti);
-				t = new Traccia(titolo, durata, etichetta, annoU, genere, link, formato, qualita, voto, isCover, isRemastered, a, tracciaR, tracciaC, artisti);
+				t = new Traccia(titolo, durata, etichetta, annoU, genere, link, formato, qualita, voto, isCover, isRemastered, a, tracciaR, tracciaC, artisti, codT);
 				traccia.add(t);
 			}
 		}

@@ -20,8 +20,9 @@ public class Traccia {
 	private Traccia tr;
 	private Traccia tc;
 	private ArrayList <Artista> artisti;
+	private int codT;
 	
-	public Traccia(String titolo, Time durata, String etichetta, int annoU, String genere, String link, String formato, int qualita, int voto,boolean isCover,boolean isRemastered,Album album,Traccia tr,Traccia tc, ArrayList<Artista> artisti ) {
+	public Traccia(String titolo, Time durata, String etichetta, int annoU, String genere, String link, String formato, int qualita, int voto,boolean isCover,boolean isRemastered,Album album,Traccia tr,Traccia tc, ArrayList<Artista> artisti, int codT) {
 		this.titolo=titolo;
 		this.durata=durata;
 		this.etichetta=etichetta;
@@ -37,6 +38,7 @@ public class Traccia {
 		this.tr=tr;
 		this.tc=tc;
 		this.artisti = artisti;
+		this.codT = codT;
 	}
 	
 	public String getTitolo() {return titolo;}
@@ -68,4 +70,6 @@ public class Traccia {
 	public Traccia getTc() {return tc;}
 	
 	public ArrayList<Artista> getArtisti(){return artisti;}
+
+	public int getCodT() {return codT;}	
 }

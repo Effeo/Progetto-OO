@@ -19,7 +19,9 @@ public class Album {
 	
 	private ArrayList <Artista> artisti;
 	
-	public Album(String titolo, int annoU, Time durata, int ntracce, String etichetta, int voto, ArrayList <Artista> artisti) {
+	private ArrayList<Traccia> tracce;
+	
+	public Album(String titolo, int annoU, Time durata, int ntracce, String etichetta, int voto, ArrayList <Artista> artisti, ArrayList<Traccia> tracce) {
 		this.titolo = titolo;
 		this.annoU = annoU;
 		this.durata = durata;
@@ -27,6 +29,7 @@ public class Album {
 		this.etichetta = etichetta;
 		this.voto = voto;
 		this.artisti = artisti;
+		this.tracce = tracce;
 	}
 
 	public String getTitolo() {
@@ -53,5 +56,9 @@ public class Album {
 		return voto;
 	}	
 	
+	public ArrayList<Traccia> getTracce() {
+		return tracce;
+	}
+
 	public ArrayList<Artista> getArtisti(){return artisti;}
 }

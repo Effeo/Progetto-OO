@@ -1,6 +1,8 @@
 package Controller;
 
+import java.security.Timestamp;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import ImplementazioniDao.*;
@@ -10,10 +12,14 @@ public class Controller {
 	private Utente u;
 	private UtenteImplementazioneDao ui;
 	private TracciaImplementazioneDao ti;
+	private AlbumImplementazioneDao ai;
+	private AscoltoImplementazioneDao asi;
 	
 	public Controller() {
 		ui = new UtenteImplementazioneDao();
 		ti = new TracciaImplementazioneDao();
+		ai = new AlbumImplementazioneDao();
+		asi = new AscoltoImplementazioneDao();
 	}
 	
 	public Utente login(String email, String password)
@@ -54,5 +60,23 @@ public class Controller {
 		tracce = ti.takeTraccia(query);
 		
 		return tracce;
+	}
+	
+	public ArrayList<Album> takeAlbum(String query, boolean flag)
+	{
+		ArrayList<Album> album = ai.takeAlbum(query, flag);
+		
+		return album;
+	}
+	
+	public int insertAscolto(Traccia traccia, Utente utente, Timestamp tempo)
+	{
+		int esito = 0;
+		int ora = (int) Math.ceil(tempo.getTimestamp().getHours() / 6);
+		
+		String query = "Insert into ascolta values(" + utente.getNickname() + ", " + traccia.getCodT() + ", "+ ora + ")";
+		esito = asi.insertAscolto(query);
+		
+		return esito;
 	}
 }
