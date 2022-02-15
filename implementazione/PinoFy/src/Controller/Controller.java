@@ -116,6 +116,13 @@ public class Controller {
 		return utenti;
 	}
 	
+	public ArrayList<Utente> showUtenti(String query)
+	{
+		ArrayList<Utente> utenti =ui.takeUtente(query);
+		
+		return utenti;
+	}
+	
 	public ArrayList<Playlist> takePlaylist( String query)
 	{
 		ArrayList<Playlist> playlist = pi.takePlaylist(query);

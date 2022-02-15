@@ -102,8 +102,14 @@ public class Home extends JFrame {
 		btnCercaAlbum.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(ricercaField.getText().equals(""))
+				{
+					album=controller.takeAlbum("SELECT * FROM ALBUM WHERE CODA<>0", true);
+				}
+				else
+				{
 				album = controller.takeAlbum("select * from album where titolo = '" + ricercaField.getText() + "'", true);
-				
+				}
 				if(album.size() != 0)
 				{
 					int i;
@@ -141,7 +147,14 @@ public class Home extends JFrame {
 		btnCercaArtisti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(ricercaField.getText().equals("")) 
+				{
+					artisti=controller.takeArtisti("SELECT * FROM ARTISTA ;");
+				}
+				else
+				{
 				artisti=controller.takeArtisti("SELECT * FROM ARTISTA WHERE NomeArte= '"+ricercaField.getText()+"' ;");
+				}
 				if(artisti.size() !=0 )
 				{
 					setVisibilita(false);
@@ -176,8 +189,14 @@ public class Home extends JFrame {
 		btnCercaPlaylist.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(ricercaField.getText().equals(""))
+				{
+					playlist=controller.takePlaylist("SELECT * FROM PLAYLIST ;");
+				}
+				else 
+				{
 				playlist= controller.takePlaylist("SELECT * FROM PLAYLIST WHERE visibilita = true and Titolo = '"+ricercaField.getText()+"';");
-				
+				}
 				if(playlist.size() != 0)
 				{
 					setVisibilita(false);
@@ -213,8 +232,14 @@ public class Home extends JFrame {
 		btnCercaUtenti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(ricercaField.getText().equals(""))
+				{
+					utenti=controller.showUtenti("SELECT * FROM UTENTE ;");
+				}
+				else
+				{
 				utenti = controller.takeUtente(ricercaField.getText());
-				
+				}
 				if(utenti.size() != 0)
 				{
 					setVisibilita(false);
@@ -606,23 +631,35 @@ public class Home extends JFrame {
 	
 	private void cercaTraccia(Controller controller, Utente utente, String titolo)
 	{
-		if(utente.getIsIspremium() || utente.getIsIsadmin())
+		if(titolo.equals("") && utente.getIsIspremium())
 		{
-			tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ titolo + "'");
+			tracce=controller.takeTraccia("SELECT * FROM TRACCIA WHERE CODT<>0 ;");
+			
+		}
+		else if(titolo.equals("") && !utente.getIsIspremium())
+		{
+			tracce=controller.takeTraccia("SELECT * FROM TRACCIA WHERE QUALITA=128 AND CODT<>0");
 		}
 		else
 		{
-			tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ titolo + "' AND qualita = 128;");
+			if(utente.getIsIspremium() || utente.getIsIsadmin())
+			{
+				tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ titolo + "'");
+			}
+			else
+			{
+				tracce = controller.takeTraccia("SELECT * FROM TRACCIA WHERE TITOLO = '"+ titolo + "' AND qualita = 128;");
 			
+			}
 		}
 		System.out.println(tracce.size());
 		if(tracce.size() != 0)
 		{
 			if(utente.getIsIspremium() || utente.getIsIsadmin())
 			{
-				setVisibilita(true);
+			setVisibilita(true);
 			}
-			
+		
 			btnDettagli.setVisible(true);
 			btnAscolta.setVisible(true);
 			scrollPane.setVisible(true);
@@ -647,5 +684,6 @@ public class Home extends JFrame {
 		{
 			JOptionPane.showMessageDialog(btnCercaTracce, "Non esistono tracce con il titolo inserito");
 		}
+		
 	}
 }
