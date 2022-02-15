@@ -119,6 +119,7 @@ public class MyUtente extends JFrame {
 		}
 		else
 		{
+			descrizione.setFont(new Font("Arial", Font.ITALIC, 22));
 			descrizione.setText("Nessuna descrizione");
 		}
 		
@@ -178,7 +179,7 @@ public class MyUtente extends JFrame {
 				Nazione.setEditable(false);
 				list.setEnabled(false);
 				btnConferma.setVisible(false);
-				esito=controller.updateUtente(utente.getNickname(),Nome.getSelectedText(),Cognome.getSelectedText(),Nazione.getSelectedText(),(String) list.getSelectedValue(),chckbxPremium.isSelected(),chckbxAdmin.isSelected());
+				esito=controller.updateUtente(utente.getNickname(),Nome.getText(),Cognome.getText(),Nazione.getText(),(String) list.getSelectedValue(),chckbxPremium.isSelected(),chckbxAdmin.isSelected());
 				if(esito == 1 )
 				{
 					JOptionPane.showMessageDialog(btnConferma, "Modifica avvenuta con successo, verrai riportato al log-in per ricaricare il profilo");
@@ -270,9 +271,9 @@ public class MyUtente extends JFrame {
 		
 		btnModifica.setVisible(flag);
 		btnCancellaAccount.setVisible(flag);
-		if(utente.getIsIsadmin() && flag)
+		if(!utente.getIsIsadmin() || !flag)
 		{
-			btnPannelloAscolti.setVisible(true);
+			btnPannelloAscolti.setVisible(false);
 		}
 		list.setEnabled(false);
 		calendar.setEnabled(false);

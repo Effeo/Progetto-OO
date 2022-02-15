@@ -169,13 +169,13 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 			PreparedStatement querytakeUtente= connection.prepareStatement(query);
 			ResultSet rs=querytakeUtente.executeQuery();
 			while(rs.next()) {
-				nickname=rs.getString("NikName");
+				nickname=rs.getString("NickName");
 				nome=rs.getString("Nome");
 				cognome=rs.getString("Cognome");
-				nazione=rs.getString("Nazione");
+				nazione=rs.getString("Nazionalita");
 				passwordU=rs.getString("Password");
 				sesso=rs.getString("Sesso");
-				datan=rs.getDate("Data");
+				datan=rs.getDate("Datan");
 				isPremium=rs.getBoolean("IsPremium");
 				isAdmin=rs.getBoolean("IsAdmin");
 				mail=rs.getString("Email");

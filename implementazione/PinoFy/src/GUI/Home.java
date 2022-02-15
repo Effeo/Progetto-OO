@@ -37,6 +37,9 @@ public class Home extends JFrame {
 	private JTextField ricercaField;
 	private ArrayList<Traccia> tracce;
 	private ArrayList<Album> album;
+	private ArrayList<Utente> utenti;
+	private ArrayList<Playlist> playlist;
+	private ArrayList<Artista> artisti;
 	private JFrame home;
 	private JButton btnAscolta = new JButton("Ascolta");
 	private JButton btnVota = new JButton("Vota");
@@ -59,6 +62,9 @@ public class Home extends JFrame {
 	private JLabel lblInserisciVoto = new JLabel("Inserisci voto:");
 	private ButtonGroup group = new ButtonGroup();
 	private JButton btnCercaTracce = new JButton("Cerca Tracce");
+	private boolean btnUtenti = false;
+	private boolean btnPlaylist = false;
+	private boolean btnArtista = false;
 	
 	public Home(JFrame login, Utente utente, Controller controller) 
 	{
@@ -103,6 +109,10 @@ public class Home extends JFrame {
 					int i;
 					btnAlbum = true;
 					btnTraccia = false;
+					btnUtenti = false;
+					btnPlaylist =false;
+					btnArtista = false;
+					
 					mdl.removeAllElements();
 					for(i = 0; i < album.size(); i++)
 					{
@@ -128,6 +138,34 @@ public class Home extends JFrame {
 		contentPane.add(btnCercaAlbum);
 		
 		JButton btnCercaArtisti = new JButton("Cerca Artisti");
+		btnCercaArtisti.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				artisti=controller.takeArtisti("SELECT * FROM ARTISTA WHERE NomeArte= '"+ricercaField.getText()+"' ;");
+				if(artisti.size() !=0 )
+				{
+					setVisibilita(false);
+					btnDettagli.setVisible(true);
+					list.setVisible(true);
+					scrollPane.setVisible(true);
+					btnUtenti = false;
+					btnAlbum = false;
+					btnTraccia = false;
+					btnPlaylist = false;
+					btnArtista = true;
+					
+					mdl.removeAllElements();
+					int i;
+					for(i = 0; i < artisti.size(); i++)
+					{
+						mdl.addElement(artisti.get(i).getNomearte());
+					}
+					list.setModel(mdl);
+				}
+				else {JOptionPane.showMessageDialog(btnAscolta, "Non esistono Artisti con il Nome inserito");}
+				
+			}
+		});
 		btnCercaArtisti.setForeground(Color.BLACK);
 		btnCercaArtisti.setFont(new Font("Arial", Font.BOLD, 26));
 		btnCercaArtisti.setBackground(new Color(176, 196, 222));
@@ -135,6 +173,36 @@ public class Home extends JFrame {
 		contentPane.add(btnCercaArtisti);
 		
 		JButton btnCercaPlaylist = new JButton("Cerca Playlist");
+		btnCercaPlaylist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playlist= controller.takePlaylist("SELECT * FROM PLAYLIST WHERE visibilita = true and Titolo = '"+ricercaField.getText()+"';");
+				
+				if(playlist.size() != 0)
+				{
+					setVisibilita(false);
+					btnDettagli.setVisible(true);
+					list.setVisible(true);
+					scrollPane.setVisible(true);
+					btnUtenti = false;
+					btnAlbum = false;
+					btnTraccia = false;
+					btnPlaylist = true;
+					btnArtista = false;
+					
+					mdl.removeAllElements();
+					int i;
+					for(i = 0; i < playlist.size(); i++)
+					{
+						mdl.addElement(""+playlist.get(i).getTitolo()+", "+playlist.get(i).getUtente().getNickname());
+					}
+					list.setModel(mdl);
+				}
+				
+				else {JOptionPane.showMessageDialog(btnAscolta, "Non esistono Playlist con il Titolo inserito");}
+				
+			}
+		});
 		btnCercaPlaylist.setForeground(Color.BLACK);
 		btnCercaPlaylist.setFont(new Font("Arial", Font.BOLD, 26));
 		btnCercaPlaylist.setBackground(new Color(176, 196, 222));
@@ -142,6 +210,37 @@ public class Home extends JFrame {
 		contentPane.add(btnCercaPlaylist);
 		
 		JButton btnCercaUtenti = new JButton("Cerca Utenti");
+		btnCercaUtenti.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				utenti = controller.takeUtente(ricercaField.getText());
+				
+				if(utenti.size() != 0)
+				{
+					setVisibilita(false);
+					btnDettagli.setVisible(true);
+					list.setVisible(true);
+					scrollPane.setVisible(true);
+					btnUtenti = true;
+					btnAlbum = false;
+					btnTraccia = false;
+					btnPlaylist= false;
+					btnArtista = false;
+					
+					mdl.removeAllElements();
+					int i;
+					for(i = 0; i < utenti.size(); i++)
+					{
+						mdl.addElement(utenti.get(i).getNickname());
+					}
+					list.setModel(mdl);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(btnAscolta, "Non esistono utenti con il NickName inserito");
+				}
+			}
+		});
 		btnCercaUtenti.setForeground(Color.BLACK);
 		btnCercaUtenti.setFont(new Font("Arial", Font.BOLD, 26));
 		btnCercaUtenti.setBackground(new Color(176, 196, 222));
@@ -163,6 +262,41 @@ public class Home extends JFrame {
 		contentPane.add(lblHome_1);
 		
 		JButton btnLeMiePlaylist = new JButton("Le mie Playlist");
+		btnLeMiePlaylist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playlist = controller.takePlaylist("SELECT * FROM PLAYLIST WHERE NickName = '"+utente.getNickname()+"';");
+				
+				if(playlist.size() != 0)
+				{
+					setVisibilita(false);
+					btnDettagli.setVisible(true);
+					list.setVisible(true);
+					scrollPane.setVisible(true);
+					btnUtenti = false;
+					btnAlbum = false;
+					btnTraccia = false;
+					btnPlaylist = true;
+					btnArtista = false;
+					
+					mdl.removeAllElements();
+					int i;
+					for(i = 0; i < playlist.size(); i++)
+					{
+						mdl.addElement(""+playlist.get(i).getTitolo()+", "+playlist.get(i).getUtente().getNickname());
+					}
+					list.setModel(mdl);
+				}
+				
+				else
+				{
+					JOptionPane.showMessageDialog(btnAscolta, "Non hai creato nessuna playlist, verrai reindirizzato nella pagina per la creazione di una playlist");
+					DettagliPlaylist dettagliPlaylist = new DettagliPlaylist(home, null, controller, true, utente, true,null);
+				}
+				
+				
+			}
+		});
 		btnLeMiePlaylist.setForeground(Color.BLACK);
 		btnLeMiePlaylist.setFont(new Font("Arial", Font.BOLD, 26));
 		btnLeMiePlaylist.setBackground(new Color(240, 230, 140));
@@ -389,16 +523,37 @@ public class Home extends JFrame {
 				{
 					if(btnTraccia)
 					{
-						DettagliTraccia dettagliTraccia = new DettagliTraccia(home, tracce.get(list.getSelectedIndex()), controller, null);
-						ricercaField.setText("");
-						setVisibilita(false);
+						DettagliTraccia dettagliTraccia = new DettagliTraccia(home, tracce.get(list.getSelectedIndex()), controller, null, utente);
+						System.out.println("Ti trovi in dettagli traccia");
+						
 					}
 					else if(btnAlbum)
 					{
-						DettagliAlbum dettagliAlbum = new DettagliAlbum(home, controller, album.get(list.getSelectedIndex()), null);
-						ricercaField.setText("");
-						setVisibilita(false);
+						DettagliAlbum dettagliAlbum = new DettagliAlbum(home, controller, album.get(list.getSelectedIndex()), null, utente);
+						System.out.println("Ti trovi in dettagli Album");
 					}
+					else if(btnUtenti)
+					{
+						DettagliUtente dettagliUtente = new DettagliUtente(home, utenti.get(list.getSelectedIndex()), controller);
+						System.out.println("Ti trovi in MyUtente");
+					}
+					else if(btnPlaylist)
+					{
+						boolean flag = false;
+						
+						if(playlist.get(list.getSelectedIndex()).getUtente().getNickname().equals(utente.getNickname()))
+						{
+							flag = true;
+						}
+						DettagliPlaylist dettagliPlaylist = new DettagliPlaylist(home, playlist.get(list.getSelectedIndex()), controller, flag, utente, false,null);
+					}
+					else
+					{
+						DettagliArtista dettagliArtista = new DettagliArtista(home,controller,artisti.get(list.getSelectedIndex()),null, utente);
+					}
+					
+					ricercaField.setText("");
+					setVisibilita(false);
 				}
 				else
 				{
@@ -461,6 +616,10 @@ public class Home extends JFrame {
 			list.setVisible(true);
 			btnAlbum = false;
 			btnTraccia = true;
+			btnUtenti = false;
+			btnPlaylist = false;
+			btnArtista = false;
+			
 			
 			int i;
 			mdl.removeAllElements();

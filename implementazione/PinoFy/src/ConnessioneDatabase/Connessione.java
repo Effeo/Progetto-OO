@@ -4,15 +4,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import Database.ClassNotFoundException;
+import Database.String;
+
 public class Connessione{
 
 	private static Connessione instance;
 	private Connection connection = null;
 	private String nome = "postgres";
 	private String password = "francesco";
+	//private String nome = "francesco";
+	//private String password = "Orlando2002*";
+	//private String url = "jdbc:postgresql://pinofy.postgres.database.azure.com:5432/pinofy?user=francesco&password=Orlando2002*&sslmode=require";
 	private String url = "jdbc:postgresql://localhost:5432/prova";
 	private String driver = "org.postgresql.Driver";
-
+	
 	public Connessione() throws SQLException {
 		try {
 			Class.forName(driver);
@@ -24,6 +30,18 @@ public class Connessione{
 		}
 
 	}
+	
+	/*public Connessione() throws SQLException {
+		try {
+            // Establish the connection.
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connection = DriverManager.getConnection(url, nome, password);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+	}*/
 
 	public Connection getConnection() {
 			return connection;

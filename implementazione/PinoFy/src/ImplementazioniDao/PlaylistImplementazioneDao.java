@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import ConnessioneDatabase.Connessione;
 import DAO.PlaylistDAO;
@@ -13,10 +14,12 @@ import Model.Playlist;
 import Model.Utente;
 
 public class PlaylistImplementazioneDao implements PlaylistDAO {
+	private UtenteImplementazioneDao ui;
 	private Connection connection;
 	
 	public PlaylistImplementazioneDao()
 	{
+		ui = new UtenteImplementazioneDao();
 		try {
 			connection = Connessione.getInstance().getConnection();
 		}
@@ -25,64 +28,53 @@ public class PlaylistImplementazioneDao implements PlaylistDAO {
 		}
 	}
 	
-	public Playlist takePlaylist(int codP) {
+	public ArrayList<Playlist> takePlaylist(String query) {
+		ArrayList<Playlist> playlist=new ArrayList<Playlist>();
+		ArrayList<Utente> utenti=new ArrayList<Utente>();
 		Playlist p=null;
 		String titolo = "";
+		String utente;
 		int numTracce = 0;
+		int CodP=0;
 		boolean visibilita = false;
 		Time durata = null;
 		Utente u;
-		String utente = "";
-		// devo creare pure le variabili per Utente
-		String nickname = "";
-		String mail = "";
-		String password = "";
-		String nome = "";
-		String cognome = "";
-		String nazione = "";
-		String descrizione = "";
-		String sesso = "";
-		Date datan = null;
-		boolean isPremium = false;
-		boolean isAdmin = false;
-		
-		try {PreparedStatement queryTakePlaylist=connection.prepareStatement("SELECT * FROM PLAYLIST WHERE CodP= "+codP);
+				
+		try {PreparedStatement queryTakePlaylist=connection.prepareStatement(query);
 		ResultSet rs=queryTakePlaylist.executeQuery();
 		while(rs.next()) {
+			CodP=rs.getInt("CodP");
 			titolo=rs.getString("Titolo");
 			numTracce=rs.getInt("Ntracce");
 			visibilita=rs.getBoolean("Visibilita"); //nel DB sta l'accento
 			durata=rs.getTime("Durata");
 			utente=rs.getString("NickName");
-		}//ora se visibilita e' true dobbiamo dargli la Playlist , ma nel model io passo un riferimento ad utente,ora ho una stringa...
-		
-		if(visibilita) {
-			PreparedStatement queryTakeUtente=connection.prepareStatement("SELECT * FROM UTENTE WHERE NickName='"+utente+"'");
-			ResultSet rs1=queryTakeUtente.executeQuery();
-			while(rs1.next()) {
-				nickname=rs1.getString("NickName");
-				mail=rs1.getString("Email");
-				password=rs1.getString("Password");
-				nome=rs1.getString("Nome");
-				cognome=rs1.getString("Cognome");
-				nazione=rs1.getString("Nazione");
-				descrizione=rs1.getString("Descrizione");
-				sesso=rs1.getString("Sesso");
-				datan=rs1.getDate("DataN");
-				isPremium=rs1.getBoolean("IsPremium");
-				isAdmin=rs1.getBoolean("IsAdmin");
+			utenti=ui.takeUtente("SELECT * FROM UTENTE WHERE NickName= '"+utente+"';");
+			u=utenti.get(0);
+			p=new Playlist(titolo,numTracce,visibilita,durata,u,CodP);
+			playlist.add(p);
 			}
-			u=new Utente(nickname,mail,password,nome,cognome,nazione,descrizione,sesso,datan,isPremium,isAdmin);
-			
-			p=new Playlist(titolo,numTracce,visibilita,durata,u);
-			}
-		else {System.out.println("Esiste ma e' privata,veditela con quel fecato di "+ utente);}
 		}
-		
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return p;
+		return playlist;
 	}
 
+	@Override
+	public int updatePlaylist(String query) {
+		int esito = 0;
+		
+		try
+		{
+			PreparedStatement queryUpdatePlaylist= connection.prepareStatement(query);
+			esito=queryUpdatePlaylist.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return esito;
+	}
 }

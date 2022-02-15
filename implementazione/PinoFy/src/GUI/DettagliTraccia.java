@@ -9,7 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Controller;
+import Model.Album;
 import Model.Traccia;
+import Model.Utente;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -17,9 +20,12 @@ import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -36,13 +42,21 @@ public class DettagliTraccia extends JFrame {
 	private JTextField formatoField;
 	private JTextField qualitaField;
 	private JTextField votoField;
+	private Utente utente;
+	private JButton btnTornaIndietro_2 = new JButton("Torna indietro");
 	
-	public DettagliTraccia(JFrame home, Traccia traccia, Controller controller, JFrame indietro) 
+	public DettagliTraccia(JFrame home, Traccia traccia, Controller controller, JFrame indietro, Utente utente) 
 	{
+		this.utente = utente;
 		if(indietro != null)
 		{
 			indietro.setVisible(false);
 		}
+		else
+		{
+			btnTornaIndietro_2.setVisible(false);
+		}
+		
 		home.setVisible(false);
 		dettagliTraccia = this;
 		dettagliTraccia.setVisible(true);
@@ -215,12 +229,11 @@ public class DettagliTraccia extends JFrame {
 				DettagliTraccia dettagliTraccia2;
 				if(traccia.getIsIsCover())
 				{
-					dettagliTraccia2 = new DettagliTraccia(home, traccia.getTc(), controller, dettagliTraccia);
-					
+					dettagliTraccia2 = new DettagliTraccia(home, traccia.getTc(), controller, dettagliTraccia, utente);
 				}
 				else
 				{
-					dettagliTraccia2 = new DettagliTraccia(home, traccia.getTr(), controller, dettagliTraccia);
+					dettagliTraccia2 = new DettagliTraccia(home, traccia.getTr(), controller, dettagliTraccia, utente);
 				}
 				
 				System.out.println("Traccia originale");
@@ -236,7 +249,9 @@ public class DettagliTraccia extends JFrame {
 		btnVisualizzaAlbum.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(traccia.getAlbum().getTitolo());
+				ArrayList<Album> album = controller.takeAlbum("Select * from album, traccia where traccia.coda = album.coda and traccia.codt = " + traccia.getCodT(), true);
+				DettagliAlbum dettagliAlbum = new DettagliAlbum(home, controller, album.get(0), dettagliTraccia, utente);
+				System.out.println("Ti trovi in dettagli album");
 			}
 		});
 		btnVisualizzaAlbum.setForeground(Color.BLACK);
@@ -296,7 +311,14 @@ public class DettagliTraccia extends JFrame {
 		btnVisualizzaArtista.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(traccia.getArtisti().get(list.getSelectedIndex()).getNomearte());
+				if(list.getSelectedIndex() != -1)
+				{
+					DettagliArtista da = new DettagliArtista(home, controller, traccia.getArtisti().get(list.getSelectedIndex()), dettagliTraccia, utente);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(btnVisualizzaArtista, "Scegliere un artista");
+				}
 			}
 		});
 		btnVisualizzaArtista.setForeground(Color.BLACK);
@@ -305,7 +327,6 @@ public class DettagliTraccia extends JFrame {
 		btnVisualizzaArtista.setBounds(391, 518, 314, 37);
 		contentPane.add(btnVisualizzaArtista);
 		
-		JButton btnTornaIndietro_2 = new JButton("Torna indietro");
 		btnTornaIndietro_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -317,12 +338,29 @@ public class DettagliTraccia extends JFrame {
 		btnTornaIndietro_2.setForeground(Color.BLACK);
 		btnTornaIndietro_2.setFont(new Font("Arial", Font.BOLD, 26));
 		btnTornaIndietro_2.setBackground(Color.RED);
-		btnTornaIndietro_2.setBounds(762, 59, 279, 37);
+		btnTornaIndietro_2.setBounds(762, 107, 279, 37);
 		contentPane.add(btnTornaIndietro_2);
 		
-		if(indietro == null)
-		{
-			btnTornaIndietro_2.setVisible(false);
-		}
+		JButton btnAscolta = new JButton("Ascolta");
+		btnAscolta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					try 
+					{
+				        java.awt.Desktop.getDesktop().browse(java.net.URI.create(traccia.getLink()));
+				    } catch (java.io.IOException e1) {
+				        System.out.println(e1.getMessage());
+				    }
+					
+					int esito = controller.insertAscolto(traccia, utente, Calendar.getInstance());
+					System.out.println(esito);
+			}
+		});
+		
+		btnAscolta.setForeground(Color.BLACK);
+		btnAscolta.setFont(new Font("Arial", Font.BOLD, 26));
+		btnAscolta.setBackground(new Color(244, 164, 96));
+		btnAscolta.setBounds(762, 59, 279, 37);
+		contentPane.add(btnAscolta);
 	}
 }

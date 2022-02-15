@@ -16,6 +16,8 @@ public class Controller {
 	private AlbumImplementazioneDao ai;
 	private AscoltoImplementazioneDao asi;
 	private VotoImplementazioneDao vi;
+	private PlaylistImplementazioneDao pi;
+	private ArtistaImplementazioneDao art;
 	
 	public Controller() {
 		ui = new UtenteImplementazioneDao();
@@ -23,6 +25,8 @@ public class Controller {
 		ai = new AlbumImplementazioneDao();
 		asi = new AscoltoImplementazioneDao();
 		vi = new VotoImplementazioneDao();
+		pi = new PlaylistImplementazioneDao();
+		art = new ArtistaImplementazioneDao();
 	}
 	
 	public Utente login(String email, String password)
@@ -102,5 +106,30 @@ public class Controller {
 		int esito = ui.deleteUtente("delete from utente where nickname = '"+ nickName +"'");
 		
 		return esito;
+	}
+	
+	public ArrayList<Utente> takeUtente(String nickName)
+	{
+		
+		ArrayList<Utente> utenti = ui.takeUtente("Select * from utente where nickname = '" + nickName + "'");
+		
+		return utenti;
+	}
+	
+	public ArrayList<Playlist> takePlaylist( String query)
+	{
+		ArrayList<Playlist> playlist = pi.takePlaylist(query);
+		return playlist;
+	}
+	
+	public ArrayList<Artista> takeArtisti(String query)
+	{
+		ArrayList<Artista> artisti = art.takeArtista(query);
+		return artisti;
+	}
+	
+	public void updatePlaylist(String query)
+	{
+		int esito = pi.updatePlaylist(query);
 	}
 }

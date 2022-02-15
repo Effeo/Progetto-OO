@@ -1,7 +1,9 @@
 package DAO;
+import java.util.ArrayList;
+
 import Model.Playlist;
 
 public interface PlaylistDAO {
-	Playlist takePlaylist(int codP);
-
+	ArrayList<Playlist> takePlaylist(String query);
+	int updatePlaylist(String query);
 }

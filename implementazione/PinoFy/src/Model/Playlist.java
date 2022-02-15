@@ -9,13 +9,15 @@ public class Playlist {
 	private boolean visibilita;
 	private Time durata;
 	private Utente utente;
+	private int CodP;
 	
-	public Playlist(String titolo, int ntracce, boolean visibilita, Time durata,Utente utente) {
+	public Playlist(String titolo, int ntracce, boolean visibilita, Time durata,Utente utente,int CodP) {
 		this.titolo = titolo;
 		this.ntracce = ntracce;
 		this.visibilita = visibilita;
 		this.durata = durata;
 		this.utente = utente;
+		this.CodP=CodP;
 	}
 	
 	public String getTitolo() {return titolo;}
@@ -27,5 +29,7 @@ public class Playlist {
 	public Time getDurata() {return durata;}
 	
 	public Utente getUtente() {return utente;}
+	
+	public int getCodP() {return CodP;}
 	
 }
