@@ -73,7 +73,7 @@ public class DettagliTraccia extends JFrame {
 		lblHome.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHome.setForeground(new Color(34, 139, 34));
 		lblHome.setFont(new Font("Arial", Font.PLAIN, 50));
-		lblHome.setBounds(10, 11, 273, 54);
+		lblHome.setBounds(10, 11, 742, 54);
 		contentPane.add(lblHome);
 		
 		JLabel lblTitolo = new JLabel("Titolo:");

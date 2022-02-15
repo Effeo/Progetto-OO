@@ -58,7 +58,7 @@ public class MyUtente extends JFrame {
 		lblMyUtente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMyUtente.setForeground(new Color(34, 139, 34));
 		lblMyUtente.setFont(new Font("Arial", Font.PLAIN, 50));
-		lblMyUtente.setBounds(10, 10, 647, 54);
+		lblMyUtente.setBounds(10, 10, 774, 54);
 		contentPane.add(lblMyUtente);
 		
 		JLabel lblNome = new JLabel("Nome:");
@@ -179,7 +179,7 @@ public class MyUtente extends JFrame {
 				Nazione.setEditable(false);
 				list.setEnabled(false);
 				btnConferma.setVisible(false);
-				esito=controller.updateUtente(utente.getNickname(),Nome.getText(),Cognome.getText(),Nazione.getText(),(String) list.getSelectedValue(),chckbxPremium.isSelected(),chckbxAdmin.isSelected());
+				esito=controller.updateUtente(utente.getNickname(),Nome.getText(),Cognome.getText(),Nazione.getText(),(String) list.getSelectedValue(),chckbxPremium.isSelected(),chckbxAdmin.isSelected(), descrizione.getText());
 				if(esito == 1 )
 				{
 					JOptionPane.showMessageDialog(btnConferma, "Modifica avvenuta con successo, verrai riportato al log-in per ricaricare il profilo");

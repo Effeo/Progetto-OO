@@ -87,10 +87,10 @@ public class Controller {
 		return esito;
 	}
 	
-	public int updateUtente(String nickname,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin) {
+	public int updateUtente(String nickname,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin, String descrizione) {
 		int esito=0;
 		
-		esito=ui.updateUtente(nickname, nome, cognome, nazione, sesso, IsPremium, IsAdmin);
+		esito=ui.updateUtente(nickname, nome, cognome, nazione, sesso, IsPremium, IsAdmin, descrizione);
 		
 		return esito;
 	}

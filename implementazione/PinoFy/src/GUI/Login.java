@@ -77,7 +77,6 @@ public class Login extends JFrame {
 		contentPane.add(passwordField);
 		
 		emailField = new JTextField();
-		emailField.setText("francesco.orlando3@studenti.unina.it");
 		emailField.setFont(new Font("Arial", Font.PLAIN, 22));
 		emailField.setBounds(426, 160, 311, 45);
 		contentPane.add(emailField);

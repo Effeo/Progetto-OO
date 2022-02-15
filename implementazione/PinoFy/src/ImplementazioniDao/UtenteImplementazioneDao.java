@@ -140,13 +140,13 @@ public class UtenteImplementazioneDao implements UtenteDAO{
 		return flag;
 	}
 	
-	public int updateUtente(String nickName,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin)
+	public int updateUtente(String nickName,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin, String descrizione)
 	{
 		int esito=0;
 		
 		try
 		{
-			PreparedStatement queryupdateUtente= connection.prepareStatement("UPDATE UTENTE SET Nome = '" + nome + "', Cognome = '" + cognome + "', Nazionalita = '" + nazione + "', Sesso = '" + sesso + "', IsPremium = " + IsPremium + ", IsAdmin = " + IsAdmin + " WHERE Nickname = '" + nickName + "';");
+			PreparedStatement queryupdateUtente= connection.prepareStatement("UPDATE UTENTE SET Nome = '" + nome + "', Cognome = '" + cognome + "', Nazionalita = '" + nazione + "', Sesso = '" + sesso + "', IsPremium = " + IsPremium + ", IsAdmin = " + IsAdmin + ", Descrizione = '" + descrizione  + "' WHERE Nickname = '" + nickName + "';");
 			esito=queryupdateUtente.executeUpdate();
 		}
 		catch(SQLException e)
