@@ -409,13 +409,26 @@ public class Home extends JFrame {
 					
 					if(voto != -1)
 					{
-						esito = controller.insertVoto(utente, tracce.get(list.getSelectedIndex()), 0);
-						
-						System.out.println(esito);
-						
-						if(esito != 0)
+						if(!controller.checkVoto("Select * from Vota where Nickname= '"+utente.getNickname()+"' AND codT="+tracce.get(list.getSelectedIndex()).getCodT()+";"))
 						{
-							cercaTraccia(controller, utente, tracce.get(0).getTitolo());
+							esito = controller.insertVoto(utente, tracce.get(list.getSelectedIndex()), voto);
+						
+							System.out.println(esito);
+						
+							if(esito != 0)
+							{
+								cercaTraccia(controller, utente, tracce.get(0).getTitolo());
+								System.out.println("inserimenti");
+							}
+						}
+						else
+						{
+							esito=controller.updateVoto("UPDATE VOTA SET VOTO ="+voto+" WHERE NICKNAME='"+utente.getNickname()+"' AND CODT="+tracce.get(list.getSelectedIndex()).getCodT()+";");
+							if(esito!=0)
+							{
+								cercaTraccia(controller, utente, tracce.get(0).getTitolo());
+								System.out.println("aggiornamenti");
+							}
 						}
 					}
 					else
@@ -490,7 +503,7 @@ public class Home extends JFrame {
 		
 		rb10.setFont(new Font("Arial", Font.PLAIN, 26));
 		rb10.setBackground(new Color(224, 255, 255));
-		rb10.setBounds(915, 587, 53, 34);
+		rb10.setBounds(915, 587, 82, 34);
 		contentPane.add(rb10);
 		
 		group.add(rb1);

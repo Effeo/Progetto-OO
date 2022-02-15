@@ -8,5 +8,5 @@ public interface AscoltoDAO
 {
 	int insertAscolto(String query);
 	
-	ArrayList<Ascolto> mostraAscolti(String query);
+	ArrayList<Ascolto> takeAscolti(String query);
 }

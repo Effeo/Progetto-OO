@@ -23,6 +23,7 @@ public class AscoltoImplementazioneDao implements AscoltoDAO {
 		try {
 			connection = Connessione.getInstance().getConnection();
 			ti = new TracciaImplementazioneDao();
+			ui = new UtenteImplementazioneDao();
 			
 		}
 		catch (SQLException e){
@@ -46,34 +47,33 @@ public class AscoltoImplementazioneDao implements AscoltoDAO {
 		return esito;
 	}
 	
-	//Qui mi da sia l'Utente che una Traccia
-	public ArrayList<Ascolto> mostraAscolti(String query) 
-	//prima di chiamre il metodo, il controller deve estrarre tutti i codT delle tracce avent il titolo cheisto dal utente e per ogni cod T,chimare questo metodo
-	// quindi la query sara della forma "Select * from ascolti wehre nikname=txtutente and codt=codt_estratto"
-	{
-		ArrayList<Ascolto> ascolti=new ArrayList<Ascolto>();
-		Ascolto a;
-		String nikname;
-		int Codt=0;
-		int fascia=0;
-		ArrayList<Traccia> t= new ArrayList<Traccia>();
-		ArrayList<Utente> u=new ArrayList<Utente>();
-
+	
+	public ArrayList<Ascolto> takeAscolti(String query) 
+	{ 
+		ArrayList<Ascolto> ascolti= new ArrayList<Ascolto>();
+		ArrayList<Utente> utenti ;
+		ArrayList<Traccia> tracce ; 
+		Ascolto a=null;
+		
+		String nickname;
+		int codT;
+		int fascia;
 		
 		try{
-			PreparedStatement queryInsertAscolto = connection.prepareStatement(query);
-			ResultSet rs = queryInsertAscolto.executeQuery();
+			PreparedStatement queryAscolto = connection.prepareStatement(query);
+			ResultSet rs = queryAscolto.executeQuery();
+			
 			while(rs.next())
 			{
-				Codt=rs.getInt("CodT");
-				nikname=rs.getString("NikName");
-				fascia=rs.getInt("Fascia");
-				t=ti.takeTraccia("");//credo sia meglio creare un metodo apposito in questo caso (non saprei dove scrivere la query)
-				u=ui.takeUtente("");// pure qui
-				a=new Ascolto(u.get(0),t.get(0),fascia);
+				nickname=rs.getString("NickName");
+				codT=rs.getInt("CodT");
+				fascia=rs.getInt("fasciaoraria");
+				utenti=ui.takeUtente("SELECT * FROM UTENTE WHERE NICKNAME='"+nickname+"' ;");
+				tracce=ti.takeTraccia("SELECT * FROM TRACCIA WHERE CODT="+codT+";");
+				a= new Ascolto(utenti.get(0),tracce.get(0),fascia);
 				ascolti.add(a);
+				System.out.println(a.getFascia());
 			}
-			
 		}
 		catch(SQLException e)
 		{

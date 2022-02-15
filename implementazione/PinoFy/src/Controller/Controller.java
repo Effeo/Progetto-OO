@@ -132,4 +132,24 @@ public class Controller {
 	{
 		int esito = pi.updatePlaylist(query);
 	}
+	
+	public ArrayList<Ascolto> takeAscolto(String query)
+	{
+		ArrayList<Ascolto> ascolti= asi.takeAscolti(query);
+		return ascolti;
+	}
+	
+	public boolean checkVoto(String query)
+	{
+		boolean flag=false;
+		flag=vi.checkVoto(query);
+		return flag;
+	}
+	
+	public int updateVoto(String query)
+	{
+		int esito;
+		esito=vi.updateVoto(query);
+		return esito;
+	}
 }

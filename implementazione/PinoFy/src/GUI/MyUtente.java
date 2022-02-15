@@ -259,7 +259,7 @@ public class MyUtente extends JFrame {
 		btnPannelloAscolti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Pannello pannello=new Pannello(myUtente,controller);
+				Pannello pannello=new Pannello(myUtente,controller,home);
 				System.out.println("Sono in Pannello");
 			}
 		});

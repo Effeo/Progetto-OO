@@ -13,4 +13,5 @@ public interface UtenteDAO {
 	int updateUtente(String nickName,String nome, String cognome, String nazione,String sesso,boolean IsPremium, boolean IsAdmin);
 	ArrayList<Utente> takeUtente(String query);
 	int deleteUtente(String query);
+	
 }

@@ -63,8 +63,6 @@ public class DettagliPlaylist extends JFrame {
 	private ArrayList<Traccia> tracce2;
 	private JLabel lblHome = new JLabel();
 	private final JButton btnTornaIndietro = new JButton("Torna Indietro");
-	private JButton btnCreaNuovaPlaylist = new JButton("Crea nuova playlist");
-	private boolean nuovo1;
 	
 	public DettagliPlaylist(JFrame home, Playlist playlist, Controller controller, boolean flag, Utente utente, boolean nuovo, JFrame indietro) 
 	{
@@ -72,7 +70,6 @@ public class DettagliPlaylist extends JFrame {
 		dettagliPlaylist.setVisible(true);
 		home.setVisible(false);
 		System.out.println("Sei in dettagli playlist");
-		this.nuovo1 = nuovo;
 		
 		if(indietro == null)
 		{
@@ -220,7 +217,7 @@ public class DettagliPlaylist extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				boolean flag3 = false;
-				int i, maxP;
+				int i;
 				ArrayList<Playlist> p;
 				
 				if(boxPubblica.getSelectedObjects() != null)
@@ -228,22 +225,14 @@ public class DettagliPlaylist extends JFrame {
 					flag3 = true;
 				}
 				
-				if(nuovo1)
+				if(nuovo)
 				{
 					controller.updatePlaylist("Insert into playlist(Titolo, visibilita, nickname) values('" + titoloField.getText() + "', " + flag3 + ", '" + utente.getNickname() + "');");
-					p = controller.takePlaylist("Select CodP, NickName, titolo, Ntracce, visibilita, durata from playlist where nickname = '" + utente.getNickname() + "'");
-					maxP = p.get(0).getCodP();	
-					for(i = 1; i < p.size(); i++)
-					{
-						if(maxP < p.get(i).getCodP())
-						{
-							maxP = p.get(i).getCodP();
-						}
-					}
+					p = controller.takePlaylist("Select * from playlist where nickname = '" + utente.getNickname() + "'");
 					
 					for(i = 0; i < codTNew.size(); i++)
 					{
-						controller.updatePlaylist("insert into Contiene values(" + maxP + ", " + codTNew.get(i) + ");");
+						controller.updatePlaylist("insert into Contiene values(" + p.get(0).getCodP() + ", " + codTNew.get(i) + ");");
 					}
 				}
 				else
@@ -405,7 +394,6 @@ public class DettagliPlaylist extends JFrame {
 					{
 						if(tracce.get(i).getCodT() == tracce2.get(listTracceNew.getAnchorSelectionIndex()).getCodT())
 						{
-							System.out.println(tracce.get(i).getCodT());
 							flag2 = true;
 						}
 						
@@ -498,23 +486,21 @@ public class DettagliPlaylist extends JFrame {
 		btnTornaIndietro.setBounds(792, 69, 249, 37);
 		
 		contentPane.add(btnTornaIndietro);
-		btnCreaNuovaPlaylist.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				nuovo1 = true;
-				setNuovo();
-			}
-		});
 		
-		btnCreaNuovaPlaylist.setForeground(Color.BLACK);
-		btnCreaNuovaPlaylist.setFont(new Font("Arial", Font.BOLD, 26));
-		btnCreaNuovaPlaylist.setBackground(new Color(0, 128, 0));
-		btnCreaNuovaPlaylist.setBounds(759, 560, 282, 37);
-		contentPane.add(btnCreaNuovaPlaylist);
-		
-		if(nuovo1)
+		if(nuovo)
 		{
-			setNuovo();
+			titoloField.setEditable(true);
+			boxPubblica.setEnabled(true);
+			boxPrivata.setEnabled(true);
+			boxPrivata.setSelected(true);
+			
+			btnDettagli.setVisible(false);
+			btnEliminaPlaylist.setVisible(false);
+			btnModifica.setVisible(false);
+			lblSeiSicuro.setVisible(false);
+			btnSi.setVisible(false);
+			btnNo.setVisible(false);
+			btnAggiungi.setVisible(false);
 		}
 		else
 		{
@@ -561,40 +547,5 @@ public class DettagliPlaylist extends JFrame {
 		btnCerca.setVisible(false);
 		ricercaField.setVisible(false);
 		listTracceIn.setModel(dlm);
-		btnCreaNuovaPlaylist.setVisible(flag);
-	}
-	
-	private void setNuovo()
-	{
-		int i;
-		
-		titoloField.setEditable(true);
-		boxPubblica.setEnabled(true);
-		boxPrivata.setEnabled(true);
-		boxPrivata.setSelected(true);
-		btnRimuovi.setVisible(true);
-		btnCerca.setVisible(true);
-		lblScegliTracciaDa.setVisible(true);
-		listTracceNew.setVisible(true);
-		scrollPane_1.setVisible(true);
-		ricercaField.setVisible(true);
-		btnConferma.setVisible(true);
-		btnDettagli.setVisible(false);
-		btnEliminaPlaylist.setVisible(false);
-		btnModifica.setVisible(false);
-		lblSeiSicuro.setVisible(false);
-		btnSi.setVisible(false);
-		btnNo.setVisible(false);
-		btnAggiungi.setVisible(false);
-		btnCreaNuovaPlaylist.setVisible(false);
-		
-		dlm.removeAllElements();
-		
-		tracce.removeAll(tracce);		
-		
-		listTracceIn.setModel(dlm);
-		titoloField.setText("");
-		durataField.setText("");
-		nTracceField.setText("");
 	}
 }
